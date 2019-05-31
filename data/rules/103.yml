@@ -1,0 +1,110 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Building Limit > $500,000
+type: underwriting
+category: Coverages & Deductibles
+code: "103"
+documentFields:
+  - coverageLimits.building.amount
+condition: ${it.document.coverageLimits.building.amount > 500000}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: Building limit cannot be greater than $500,000. Please update the value
+        to continue or additional review is required.
+      agentMessage: Building limit cannot be greater than $500,000. Please update the value
+        to continue or additional review is required.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: System Action
+    actionOutput:
+      internalMessage: Building limit cannot be greater than $500,000. Please update the value
+        to continue or additional review is required.
+      agentMessage: Building limit cannot be greater than $500,000. Please update the value
+        to continue or additional review is required.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+      set:
+        target: coverageLimits.building.amount
+        value: 500000
+    canOverride: false
+    active: true
+tests:
+  - description: New Business exception triggers when building > 500000
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 500001
+    output:
+      - action: Fatal Error
+        displayText: Building Limit > $500,000
+        category: Coverages & Deductibles
+        code: "103"
+        internalMessage: Building limit cannot be greater than $500,000. Please update the
+          value to continue or additional review is required.
+        agentMessage: Building limit cannot be greater than $500,000. Please update the
+          value to continue or additional review is required.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: coverageLimits.building.amount
+            value: 500001
+  - description: Renewal exception triggers when building > 500000
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          building:
+            amount: 500001
+    output:
+      - action: System Action
+        displayText: Building Limit > $500,000
+        category: Coverages & Deductibles
+        code: "103"
+        internalMessage: Building limit cannot be greater than $500,000. Please update the
+          value to continue or additional review is required.
+        agentMessage: Building limit cannot be greater than $500,000. Please update the
+          value to continue or additional review is required.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: coverageLimits.building.amount
+            value: 500001
+        set:
+          target: coverageLimits.building.amount
+          value: 500000
+  - description: New Business exception does not trigger when building <= 500000
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 500000
+    output: null
+  - description: Renewal exception does not trigger when building <= 500000
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          building:
+            amount: 499999
+    output: null

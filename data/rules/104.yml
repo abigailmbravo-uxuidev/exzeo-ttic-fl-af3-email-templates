@@ -1,0 +1,117 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Number Of Flood Claims > Max for zipcodesettings and not 'UNKNOWN'
+type: underwriting
+category: Claim History
+code: "104"
+documentFields:
+  - underwritingAnswers.previousFloodClaims.answer
+  - lookupFields.zipcodesettings.maxClaims
+condition: ${(upperCase(it.document.underwritingAnswers.previousFloodClaims.answer) !==
+  'UNKNOWN') && (it.document.underwritingAnswers.previousFloodClaims.answer >
+  it.document.lookupFields.zipcodesettings.maxClaims)}
+active: true
+lookupFields:
+  - name: zipcodesettings
+    type: builtIn
+    builtInConfig:
+      name: zipcodesettings
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: We are unable to provide a flood quote at this time due to the number of
+        claims.
+      agentMessage: We are unable to provide a flood quote at this time due to the number of
+        claims.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: true
+    active: true
+tests:
+  - description: New Business action triggers when number of claims > max claims in
+      zipcodesettings
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        underwritingAnswers:
+          previousFloodClaims:
+            answer: 1
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output:
+      - action: Fatal Error
+        displayText: Number Of Flood Claims > Max for zipcodesettings and not 'UNKNOWN'
+        category: Claim History
+        code: "104"
+        internalMessage: We are unable to provide a flood quote at this time due to the number
+          of claims.
+        agentMessage: We are unable to provide a flood quote at this time due to the number
+          of claims.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: true
+        active: true
+        fields:
+          - name: underwritingAnswers.previousFloodClaims.answer
+            value: 1
+          - name: lookupFields.zipcodesettings.maxClaims
+            value: 0
+  - description: New Business action does not trigger when number of claims <= max claims
+      in zipcodesettings
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        underwritingAnswers:
+          previousFloodClaims:
+            answer: 0
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null
+  - description: New Business action does not trigger when number of claims = UNKNOWN
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        underwritingAnswers:
+          previousFloodClaims:
+            answer: UNKNOWN
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null

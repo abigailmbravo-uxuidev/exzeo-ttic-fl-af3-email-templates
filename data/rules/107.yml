@@ -1,0 +1,57 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Net Premium < $250
+type: underwriting
+category: Coverages & Deductibles
+code: "107"
+documentFields:
+  - rating.netPremium
+condition: ${it.document.rating.netPremium < 250}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: Quoted premium does not meet the minimum $250 policy premium amount for
+        policy issuance.
+      agentMessage: Quoted premium does not meet the minimum $250 policy premium amount for
+        policy issuance.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+tests:
+  - description: New Business action triggers when Net Premium < $250
+    input:
+      document:
+        transactionType: New Business
+        rating:
+          netPremium: 249
+    output:
+      - action: Fatal Error
+        displayText: Net Premium < $250
+        category: Coverages & Deductibles
+        code: "107"
+        internalMessage: Quoted premium does not meet the minimum $250 policy premium amount
+          for policy issuance.
+        agentMessage: Quoted premium does not meet the minimum $250 policy premium amount
+          for policy issuance.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: rating.netPremium
+            value: 249
+  - description: New Business action does not trigger when when Net Premium >= $250
+    input:
+      document:
+        transactionType: New Business
+        rating:
+          netPremium: 250
+    output: null

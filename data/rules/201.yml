@@ -1,0 +1,68 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: PreviousClaims = UNKNOWN
+type: underwriting
+category: Claim History
+code: "201"
+documentFields:
+  - underwritingAnswers.previousFloodClaims.answer
+condition: ${upperCase(it.document.underwritingAnswers.previousFloodClaims.answer) ===
+  'UNKNOWN'}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Unknown value was selected for the number of claims.  Additional review
+        is required.
+      agentMessage: Unknown value was selected for the number of claims.  Additional review
+        is required.
+      customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+        your property.
+    canOverride: true
+    active: true
+tests:
+  - description: New Business action triggers Previous Claims = UKNOWN
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        underwritingAnswers:
+          previousFloodClaims:
+            answer: UNKNOWN
+        lookupFields: []
+    output:
+      - action: Underwriting Review
+        displayText: PreviousClaims = UNKNOWN
+        category: Claim History
+        code: "201"
+        internalMessage: Unknown value was selected for the number of claims.  Additional
+          review is required.
+        agentMessage: Unknown value was selected for the number of claims.  Additional
+          review is required.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: true
+        active: true
+        fields:
+          - name: underwritingAnswers.previousFloodClaims.answer
+            value: UNKNOWN
+  - description: New Business action triggers Previous Claims = UKNOWN
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        underwritingAnswers:
+          previousFloodClaims:
+            answer: 1
+        lookupFields: []
+    output: null

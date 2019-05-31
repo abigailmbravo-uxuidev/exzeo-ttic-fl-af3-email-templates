@@ -1,0 +1,196 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Relative Elevation < zipcodesettings.minREScore
+type: underwriting
+category: Property
+code: "109"
+documentFields:
+  - property.relativeElevation
+  - lookupFields.zipcodesettings.minREScore
+condition: ${(it.document.property.relativeElevation <
+  it.document.lookupFields.zipcodesettings.minREScore)}
+active: true
+lookupFields:
+  - name: zipcodesettings
+    type: builtIn
+    builtInConfig:
+      name: zipcodesettings
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: This risk is not eligible for a stand-alone flood policy (R.E.)
+      agentMessage: We apologize, due to underwriting, this risk does not qualify for the
+        TypTap Flood Product.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time. Please contact one of our representatives so they
+        may further assist you in obtaining a quote.
+    canOverride: true
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: System Action
+    actionOutput:
+      internalMessage: This risk is not eligible for a stand-alone flood policy (R.E.)
+      agentMessage: We apologize, due to underwriting, this risk does not qualify for the
+        TypTap Flood Product.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time. Please contact one of our representatives so they
+        may further assist you in obtaining a quote.
+      set:
+        - target: trigger.type
+          value: diary
+        - target: trigger.content
+          value: review policy
+        - target: trigger.assignee.type
+          value: tag
+        - target: trigger.assignee.id
+          value: renewal_processing
+        - target: trigger.assignee.displayName
+          value: Renewal Processing
+        - target: trigger.dueDate
+          value: ${moment().add(1, 'days').format('MM-DD-YYYY')}
+        - target: trigger.reason
+          value: Renewal Processing
+        - target: trigger.message
+          value: Processing a renewal
+        - target: trigger.open
+          value: true
+    canOverride: false
+    active: true
+tests:
+  - description: New Business Action triggers when Relative Elevation <
+      zipcodesettings.minREScore
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32168"
+        product: AF3
+        transactionType: New Business
+        property:
+          relativeElevation: 99
+          id: ""
+          physicalAddress:
+            zip: "32168"
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output:
+      - action: Fatal Error
+        displayText: Relative Elevation < zipcodesettings.minREScore
+        category: Property
+        code: "109"
+        internalMessage: This risk is not eligible for a stand-alone flood policy (R.E.)
+        agentMessage: We apologize, due to underwriting, this risk does not qualify for the
+          TypTap Flood Product.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time. Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: true
+        active: true
+        fields:
+          - name: property.relativeElevation
+            value: 99
+          - name: lookupFields.zipcodesettings.minREScore
+            value: 100
+  - description: Renewal Action triggers when Relative Elevation <
+      zipcodesettings.minREScore
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32168"
+        product: AF3
+        transactionType: Renewal
+        property:
+          relativeElevation: 98
+          id: ""
+          physicalAddress:
+            zip: "32168"
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output:
+      - action: System Action
+        displayText: Relative Elevation < zipcodesettings.minREScore
+        category: Property
+        code: "109"
+        internalMessage: This risk is not eligible for a stand-alone flood policy (R.E.)
+        agentMessage: We apologize, due to underwriting, this risk does not qualify for the
+          TypTap Flood Product.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time. Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.relativeElevation
+            value: 98
+          - name: lookupFields.zipcodesettings.minREScore
+            value: 100
+        set:
+          - target: trigger.type
+            value: diary
+          - target: trigger.content
+            value: review policy
+          - target: trigger.assignee.type
+            value: tag
+          - target: trigger.assignee.id
+            value: renewal_processing
+          - target: trigger.assignee.displayName
+            value: Renewal Processing
+          - target: trigger.dueDate
+            value: ${moment().add(1, 'days').format('MM-DD-YYYY')}
+          - target: trigger.reason
+            value: Renewal Processing
+          - target: trigger.message
+            value: Processing a renewal
+          - target: trigger.open
+            value: true
+  - description: New Business Action does not trigger when when Relative Elevation >=
+      zipcodesettings.minREScore
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          relativeElevation: 1
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null
+  - description: Renewal Action does not trigger when when Relative Elevation >=
+      zipcodesettings.minREScore
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: Renewal
+        property:
+          relativeElevation: 2
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null

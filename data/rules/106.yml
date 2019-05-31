@@ -1,0 +1,130 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: CoverageLimits.personalProperty.amount > 50% of Coveragelimit.building.amount
+type: underwriting
+category: Coverages & Deductibles
+code: "106"
+documentFields:
+  - coverageLimits.personalProperty.amount
+  - coverageLimits.building.amount
+condition: ${it.document.coverageLimits.personalProperty.amount > (0.5 *
+  it.document.coverageLimits.building.amount)}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: Personal property limit cannot be greater than 50% of the building
+        limit. Please update value to continue quote.
+      agentMessage: Personal property limit cannot be greater than 50% of the building
+        limit. Please update value to continue quote.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: System Action
+    actionOutput:
+      internalMessage: Personal property limit cannot be greater than 50% of the building
+        limit. Please update value to continue quote.
+      agentMessage: Personal property limit cannot be greater than 50% of the building
+        limit. Please update value to continue quote.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+      set:
+        target: coverageLimits.personalProperty.amount
+        value: ${round(0.5 * it.document.coverageLimits.building.amount, 0)}
+    canOverride: false
+    active: true
+tests:
+  - description: New Business Personal property limit action triggers when greater than 50%
+      of the building limit
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          personalProperty:
+            amount: 80021
+          building:
+            amount: 100088
+    output:
+      - action: Fatal Error
+        displayText: CoverageLimits.personalProperty.amount > 50% of
+          Coveragelimit.building.amount
+        category: Coverages & Deductibles
+        code: "106"
+        internalMessage: Personal property limit cannot be greater than 50% of the building
+          limit. Please update value to continue quote.
+        agentMessage: Personal property limit cannot be greater than 50% of the building
+          limit. Please update value to continue quote.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: coverageLimits.personalProperty.amount
+            value: 80021
+          - name: coverageLimits.building.amount
+            value: 100088
+  - description: Renewal Personal property limit action triggers when greater than 50% of
+      the building limit
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          personalProperty:
+            amount: 50001
+          building:
+            amount: 100000
+    output:
+      - action: System Action
+        displayText: CoverageLimits.personalProperty.amount > 50% of
+          Coveragelimit.building.amount
+        category: Coverages & Deductibles
+        code: "106"
+        internalMessage: Personal property limit cannot be greater than 50% of the building
+          limit. Please update value to continue quote.
+        agentMessage: Personal property limit cannot be greater than 50% of the building
+          limit. Please update value to continue quote.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: coverageLimits.personalProperty.amount
+            value: 50001
+          - name: coverageLimits.building.amount
+            value: 100000
+        set:
+          target: coverageLimits.personalProperty.amount
+          value: 50000
+  - description: New Business Personal property limit action does not trigger when not
+      greater than 50% of the building limit
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          personalProperty:
+            amount: 67530
+          building:
+            amount: 142222
+    output: null
+  - description: Renewal Personal property limit action does not trigger when not greater
+      than 50% of the building limit
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          personalProperty:
+            amount: 100000
+          building:
+            amount: 200000
+    output: null

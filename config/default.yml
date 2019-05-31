@@ -1,0 +1,3 @@
+default:
+  data:
+    mongoUrl: 'mongodb://mongo:27017/harmony'

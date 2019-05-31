@@ -1,0 +1,94 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Net Premium < minNetPremium for zipcodesettings
+type: underwriting
+category: Coverages & Deductibles
+code: "216"
+documentFields:
+  - rating.netPremium
+  - lookupFields.zipcodesettings.minNetPremium
+condition: ${!(it.document.rating.netPremium === 0 || it.document.rating.netPremium ===
+  null) && ((it.document.rating.netPremium || 0) <
+  it.document.lookupFields.zipcodesettings.minNetPremium)}
+active: true
+lookupFields:
+  - name: zipcodesettings
+    type: builtIn
+    builtInConfig:
+      name: zipcodesettings
+actions:
+  - transactionTypes:
+      - New Business
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Quoted premium is less than
+        ${it.document.lookupFields.zipcodesettings.minNetPremium} the minimum
+        amount allowed for policy issuance.  Review is required.
+      agentMessage: Quoted premium is less than
+        ${it.document.lookupFields.zipcodesettings.minNetPremium} the minimum
+        amount allowed for policy issuance.  Review is required.
+      customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+        your property.
+    canOverride: true
+    active: true
+tests:
+  - description: New Business action triggers when Net Premium < Min Net Premium
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        rating:
+          netPremium: 9000
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output:
+      - action: Underwriting Review
+        displayText: Net Premium < minNetPremium for zipcodesettings
+        category: Coverages & Deductibles
+        code: "216"
+        internalMessage: Quoted premium is less than
+          ${it.document.lookupFields.zipcodesettings.minNetPremium} the minimum
+          amount allowed for policy issuance.  Review is required.
+        agentMessage: Quoted premium is less than
+          ${it.document.lookupFields.zipcodesettings.minNetPremium} the minimum
+          amount allowed for policy issuance.  Review is required.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: true
+        active: true
+        fields:
+          - name: rating.netPremium
+            value: 9000
+          - name: lookupFields.zipcodesettings.minNetPremium
+            value: 10000
+  - description: New Business action triggers when Net Premium < Min Net Premium
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        rating:
+          netPremium: 10000
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null

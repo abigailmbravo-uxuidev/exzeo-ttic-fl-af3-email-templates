@@ -1,0 +1,92 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Flood Zone Not in {A, B, C, V, X, Z}
+type: underwriting
+category: Property
+code: "105"
+documentFields:
+  - property.floodZone
+condition: ${!includes(['A', 'B', 'C', 'V', 'X', 'Z'], it.document.property.floodZone)}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: Flood quoting is only available for flood zones A, B, C, V, X or Z.
+      agentMessage: The Flood Zone for this property is not valid for product type.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Flood quoting is only available for flood zones A, B, C, V, X or Z.
+      agentMessage: The Flood Zone for this property is not valid for product type.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+tests:
+  - description: New Business action triggers when Flood Zone not in {A, B, C, V, X, Z}
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodZone: D
+    output:
+      - action: Fatal Error
+        displayText: Flood Zone Not in {A, B, C, V, X, Z}
+        category: Property
+        code: "105"
+        internalMessage: Flood quoting is only available for flood zones A, B, C, V, X or Z.
+        agentMessage: The Flood Zone for this property is not valid for product type.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodZone
+            value: D
+  - description: Renewal action triggers when Flood Zone not in {A, B, C, V, X, Z}
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodZone: E
+    output:
+      - action: Underwriting Review
+        displayText: Flood Zone Not in {A, B, C, V, X, Z}
+        category: Property
+        code: "105"
+        internalMessage: Flood quoting is only available for flood zones A, B, C, V, X or Z.
+        agentMessage: The Flood Zone for this property is not valid for product type.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodZone
+            value: E
+  - description: New Business action does not trigger when Flood Zone in {A, B, C, V, X, Z}
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodZone: A
+    output: null
+  - description: Renewal action does not trigger when Flood Zone in {A, B, C, V, X, Z}
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodZone: Z
+    output: null

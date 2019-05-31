@@ -1,0 +1,125 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Building and Contents Deductibles Different
+type: underwriting
+category: Coverages & Deductibles
+code: "108"
+documentFields:
+  - coverageLimits.deductibles.building.amount
+  - coverageLimits.deductibles.contents.amount
+condition: ${it.document.coverageLimits.deductibles.building.amount !==
+  it.document.coverageLimits.deductibles.contents.amount}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: Building and Contents Deductibles must be the same. Please update the
+        value(s) to continue quote.
+      agentMessage: Building and Contents Deductibles must be the same. Please update the
+        value(s) to continue quote.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Building and Contents Deductibles must be the same. Please update the
+        value(s) to continue quote.
+      agentMessage: Building and Contents Deductibles must be the same. Please update the
+        value(s) to continue quote.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+tests:
+  - description: New Business action triggers when Building and Contents Deductibles
+      Different
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          deductibles:
+            building:
+              amount: 1000
+            contents:
+              amount: 500
+    output:
+      - action: Fatal Error
+        displayText: Building and Contents Deductibles Different
+        category: Coverages & Deductibles
+        code: "108"
+        internalMessage: Building and Contents Deductibles must be the same. Please update the
+          value(s) to continue quote.
+        agentMessage: Building and Contents Deductibles must be the same. Please update the
+          value(s) to continue quote.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: coverageLimits.deductibles.building.amount
+            value: 1000
+          - name: coverageLimits.deductibles.contents.amount
+            value: 500
+  - description: Renewal action triggers when Building and Contents Deductibles Different
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          deductibles:
+            building:
+              amount: 500
+            contents:
+              amount: 501
+    output:
+      - action: Underwriting Review
+        displayText: Building and Contents Deductibles Different
+        category: Coverages & Deductibles
+        code: "108"
+        internalMessage: Building and Contents Deductibles must be the same. Please update the
+          value(s) to continue quote.
+        agentMessage: Building and Contents Deductibles must be the same. Please update the
+          value(s) to continue quote.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: coverageLimits.deductibles.building.amount
+            value: 500
+          - name: coverageLimits.deductibles.contents.amount
+            value: 501
+  - description: New Business action does not triggers Building and Contents Deductibles
+      are the same
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          deductibles:
+            building:
+              amount: 500
+            contents:
+              amount: 500
+    output: null
+  - description: Renewal action does not triggers Building and Contents Deductibles are the
+      same
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          deductibles:
+            building:
+              amount: 1000
+            contents:
+              amount: 1000
+    output: null

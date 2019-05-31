@@ -1,0 +1,108 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Home in CBRS area (property.floodZone = Z)
+type: underwriting
+category: Property
+code: "402"
+documentFields:
+  - property.floodZone
+condition: ${it.document.property.floodZone === 'Z'}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Informational
+    actionOutput:
+      internalMessage: This property is located in the Coastal Barrier Resource System and is
+        not eligible for Increased Cost of Compliance coverage.
+      agentMessage: Please be aware that this property is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+      customerMessage: Please be aware that your home is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: This property is located in the Coastal Barrier Resource System and is
+        not eligible for Increased Cost of Compliance coverage.
+      agentMessage: Please be aware that this property is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+      customerMessage: Please be aware that your home is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+    canOverride: false
+    active: true
+tests:
+  - description: New Business Personal property limit action triggers when Home in CBRS
+      area (property.floodZone = Z)
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodZone: Z
+    output:
+      - action: Informational
+        displayText: Home in CBRS area (property.floodZone = Z)
+        category: Property
+        code: "402"
+        internalMessage: This property is located in the Coastal Barrier Resource System and is
+          not eligible for Increased Cost of Compliance coverage.
+        agentMessage: Please be aware that this property is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        customerMessage: Please be aware that your home is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodZone
+            value: Z
+  - description: Renewal Personal property limit action triggers when Home in CBRS area
+      (property.floodZone = Z)
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodZone: Z
+    output:
+      - action: Underwriting Review
+        displayText: Home in CBRS area (property.floodZone = Z)
+        category: Property
+        code: "402"
+        internalMessage: This property is located in the Coastal Barrier Resource System and is
+          not eligible for Increased Cost of Compliance coverage.
+        agentMessage: Please be aware that this property is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        customerMessage: Please be aware that your home is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodZone
+            value: Z
+  - description: New Business Personal property limit action does not trigger when Home is
+      not in CBRS area (property.floodZone is not Z)
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodZone: A
+    output: null
+  - description: Renewal Personal property limit action does not trigger when Home is not
+      in CBRS area (property.floodZone is not Z)
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodZone: A
+    output: null

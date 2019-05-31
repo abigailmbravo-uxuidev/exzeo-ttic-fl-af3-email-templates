@@ -1,0 +1,94 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Net Premium > maxNetPremium for zipcodesettings
+type: underwriting
+category: Coverages & Deductibles
+code: "215"
+documentFields:
+  - rating.netPremium
+  - lookupFields.zipcodesettings.maxNetPremium
+condition: ${(it.document.rating.netPremium || 0) >
+  it.document.lookupFields.zipcodesettings.maxNetPremium}
+active: true
+lookupFields:
+  - name: zipcodesettings
+    type: builtIn
+    builtInConfig:
+      name: zipcodesettings
+actions:
+  - transactionTypes:
+      - New Business
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Quoted premium exceeds
+        ${it.document.lookupFields.zipcodesettings.maxNetPremium} the maximum
+        amount allowed for policy issuance. Review is required.
+      agentMessage: Quoted premium exceeds
+        ${it.document.lookupFields.zipcodesettings.maxNetPremium} the maximum
+        amount allowed for policy issuance. Review is required.
+      customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+        your property.
+    canOverride: true
+    active: true
+tests:
+  - description: New Business action triggers when Net Premium > Max Net Premium
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        rating:
+          netPremium: 21000
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output:
+      - action: Underwriting Review
+        displayText: Net Premium > maxNetPremium for zipcodesettings
+        category: Coverages & Deductibles
+        code: "215"
+        internalMessage: Quoted premium exceeds
+          ${it.document.lookupFields.zipcodesettings.maxNetPremium} the maximum
+          amount allowed for policy issuance. Review is required.
+        agentMessage: Quoted premium exceeds
+          ${it.document.lookupFields.zipcodesettings.maxNetPremium} the maximum
+          amount allowed for policy issuance. Review is required.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: true
+        active: true
+        fields:
+          - name: rating.netPremium
+            value: 21000
+          - name: lookupFields.zipcodesettings.maxNetPremium
+            value: 20000
+  - description: New Business action does not trigger when Net Premium is not > Max Net
+      Premium
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        rating:
+          netPremium: 20000
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null

@@ -1,0 +1,92 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Number of Flood Claims = maxClaims for zipcodesettings
+type: underwriting
+category: Claim History
+code: "206"
+documentFields:
+  - underwritingAnswers.previousFloodClaims.answer
+  - lookupFields.zipcodesettings.maxClaims
+condition: ${it.document.underwritingAnswers.previousFloodClaims.answer ===
+  it.document.lookupFields.zipcodesettings.maxClaims}
+active: true
+lookupFields:
+  - name: zipcodesettings
+    type: builtIn
+    builtInConfig:
+      name: zipcodesettings
+actions:
+  - transactionTypes:
+      - New Business
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: The number of flood claims entered equals
+        ${it.document.lookupFields.zipcodesettings.maxClaims} the maximum
+        allowable for a quote.   Additional review may be required.
+      agentMessage: Due to previous claims history, underwriting review is required.
+      customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+        your property.
+    canOverride: true
+    active: true
+tests:
+  - description: New Business action triggers when number of claims > max claims in
+      zipcodesettings
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32168"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32168"
+        underwritingAnswers:
+          previousFloodClaims:
+            answer: 1
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output:
+      - action: Underwriting Review
+        displayText: Number of Flood Claims = maxClaims for zipcodesettings
+        category: Claim History
+        code: "206"
+        internalMessage: The number of flood claims entered equals
+          ${it.document.lookupFields.zipcodesettings.maxClaims} the maximum
+          allowable for a quote.   Additional review may be required.
+        agentMessage: Due to previous claims history, underwriting review is required.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: true
+        active: true
+        fields:
+          - name: underwritingAnswers.previousFloodClaims.answer
+            value: 1
+          - name: lookupFields.zipcodesettings.maxClaims
+            value: 1
+  - description: New Business action does not trigger when number of claims <= max claims
+      in zipcodesettings
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32168"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32168"
+        underwritingAnswers:
+          previousFloodClaims: 0
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null

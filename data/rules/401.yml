@@ -1,0 +1,65 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Building Value from CasaClue > $500,000
+type: underwriting
+category: Property
+code: "401"
+documentFields:
+  - coverageLimits.building.amount
+condition: ${it.document.coverageLimits.building.amount > 500000}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Informational
+    actionOutput:
+      internalMessage: Building limit cannot exceed $500,000 for a Flood policy issuance. The
+        actual building replacement cost for this property may exceed this
+        amount.
+      agentMessage: Please be aware the estimated replacement cost of your home may exceed
+        the maximum building policy limit of $500,000. Excess insurance may be
+        required to reduce your out of pocket expenses.
+      customerMessage: Please be aware the estimated replacement cost of your home may exceed
+        the maximum building policy limit of $500,000. Excess insurance may be
+        required to reduce your out of pocket expenses.
+    canOverride: true
+    active: true
+tests:
+  - description: New Business Personal property limit action triggers when Building Value
+      from CasaClue > $500,000
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 500001
+    output:
+      - action: Informational
+        displayText: Building Value from CasaClue > $500,000
+        category: Property
+        code: "401"
+        internalMessage: Building limit cannot exceed $500,000 for a Flood policy issuance. The
+          actual building replacement cost for this property may exceed this
+          amount.
+        agentMessage: Please be aware the estimated replacement cost of your home may exceed
+          the maximum building policy limit of $500,000. Excess insurance may be
+          required to reduce your out of pocket expenses.
+        customerMessage: Please be aware the estimated replacement cost of your home may exceed
+          the maximum building policy limit of $500,000. Excess insurance may be
+          required to reduce your out of pocket expenses.
+        canOverride: true
+        active: true
+        fields:
+          - name: coverageLimits.building.amount
+            value: 500001
+  - description: New Business Personal property limit action does not trigger when Building
+      Value from CasaClue <= $500,000
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 500000
+    output: null

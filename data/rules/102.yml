@@ -1,0 +1,202 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Property in Do Not Write List
+type: underwriting
+category: Property
+code: "102"
+documentFields:
+  - property.id
+  - lookupFields.propertysettings.propertyId
+  - lookupFields.propertysettings.status
+condition: ${(it.document.property.id ===
+  it.document.lookupFields.propertysettings.propertyId) &&
+  (it.document.lookupFields.propertysettings.status === 'ineligible')}
+active: true
+lookupFields:
+  - name: propertysettings
+    type: builtIn
+    builtInConfig:
+      name: propertysettings
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: Address is not eligible for a stand alone flood policy based on the
+        underwriting information.
+      agentMessage: Address is not eligible for a stand alone flood policy based on the
+        underwriting information.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: System Action
+    actionOutput:
+      internalMessage: Address is not eligible for a stand alone flood policy based on the
+        underwriting information.
+      agentMessage: Address is not eligible for a stand alone flood policy based on the
+        underwriting information.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+      set:
+        - target: trigger.type
+          value: diary
+        - target: trigger.content
+          value: review policy
+        - target: trigger.assignee.type
+          value: tag
+        - target: trigger.assignee.id
+          value: renewal_processing
+        - target: trigger.assignee.displayName
+          value: Renewal Processing
+        - target: trigger.dueDate
+          value: ${moment().add(1, 'days').format('MM-DD-YYYY')}
+        - target: trigger.reason
+          value: Renewal Processing
+        - target: trigger.message
+          value: Processing a renewal
+        - target: trigger.open
+          value: true
+    canOverride: false
+    active: true
+tests:
+  - description: New Business Property in do not write list action triggers when property
+      is found
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        product: AF3
+        transactionType: New Business
+        id: 12086BDE590F0128B
+        property:
+          id: 12086BDE590F0128B
+          physicalAddress:
+            zip: ""
+        lookupFields:
+          - name: propertysettings
+            type: builtIn
+            builtInConfig:
+              name: propertysettings
+    output:
+      - active: true
+        action: Fatal Error
+        displayText: Property in Do Not Write List
+        category: Property
+        code: "102"
+        internalMessage: Address is not eligible for a stand alone flood policy based on the
+          underwriting information.
+        agentMessage: Address is not eligible for a stand alone flood policy based on the
+          underwriting information.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        fields:
+          - name: property.id
+            value: 12086BDE590F0128B
+          - name: lookupFields.propertysettings.propertyId
+            value: 12086BDE590F0128B
+          - name: lookupFields.propertysettings.status
+            value: ineligible
+  - description: New Business Property in do not write list action does not trigger when
+      property is not found
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        product: AF3
+        transactionType: New Business
+        id: 12086BDE590F0128B1
+        property:
+          id: 12086BDE590F0128B1
+          physicalAddress:
+            zip: ""
+        lookupFields:
+          - name: propertysettings
+            type: builtIn
+            builtInConfig:
+              name: propertysettings
+    output: null
+  - description: Renewal Property in do not write list action triggers when property is
+      found
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        product: AF3
+        transactionType: Renewal
+        id: 12086BDE590F0128B
+        property:
+          id: 12086BDE590F0128B
+          physicalAddress:
+            zip: ""
+        lookupFields:
+          - name: propertysettings
+            type: builtIn
+            builtInConfig:
+              name: propertysettings
+    output:
+      - active: true
+        action: System Action
+        displayText: Property in Do Not Write List
+        category: Property
+        code: "102"
+        internalMessage: Address is not eligible for a stand alone flood policy based on the
+          underwriting information.
+        agentMessage: Address is not eligible for a stand alone flood policy based on the
+          underwriting information.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        fields:
+          - name: property.id
+            value: 12086BDE590F0128B
+          - name: lookupFields.propertysettings.propertyId
+            value: 12086BDE590F0128B
+          - name: lookupFields.propertysettings.status
+            value: ineligible
+        set:
+          - target: trigger.type
+            value: diary
+          - target: trigger.content
+            value: review policy
+          - target: trigger.assignee.type
+            value: tag
+          - target: trigger.assignee.id
+            value: renewal_processing
+          - target: trigger.assignee.displayName
+            value: Renewal Processing
+          - target: trigger.dueDate
+            value: ${moment().add(1, 'days').format('MM-DD-YYYY')}
+          - target: trigger.reason
+            value: Renewal Processing
+          - target: trigger.message
+            value: Processing a renewal
+          - target: trigger.open
+            value: true
+  - description: Renewal Property in do not write list action does not trigger when
+      property is not found
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        product: AF3
+        transactionType: Renewal
+        id: 12086BDE590F0128B1
+        property:
+          id: 12086BDE590F0128B1
+          physicalAddress:
+            zip: ""
+        lookupFields:
+          - name: propertysettings
+            type: builtIn
+            builtInConfig:
+              name: propertysettings
+    output: null

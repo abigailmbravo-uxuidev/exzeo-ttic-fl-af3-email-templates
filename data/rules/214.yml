@@ -1,0 +1,120 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Replacement Cost Coverage Selected When Contents Limit < 25% of Building Limit
+type: underwriting
+category: Coverages & Deductibles
+code: "214"
+documentFields:
+  - coverageLimits.building.amount
+  - coverageLimits.personalProperty.amount
+condition: ${it.document.coverageLimits.personalProperty.amount <
+  (it.document.coverageLimits.building.amount * .25)}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Personal property replacement cost coverage cannot be selected if the
+        personal property limit is less than 25% of the building limit.
+      agentMessage: Personal property replacement cost coverage cannot be selected if the
+        personal property limit is less than 25% of the building limit.
+      customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+        your property.
+    canOverride: true
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Personal property replacement cost coverage cannot be selected if the
+        personal property limit is less than 25% of the building limit.
+      agentMessage: Personal property replacement cost coverage cannot be selected if the
+        personal property limit is less than 25% of the building limit.
+      customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+        your property.
+    canOverride: false
+    active: true
+tests:
+  - description: New Business exception triggers when Replacement Cost Coverage Selected
+      When Contents Limit < 25% of Building Limit
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 1200000
+          personalProperty:
+            amount: 299999
+    output:
+      - action: Underwriting Review
+        displayText: Replacement Cost Coverage Selected When Contents Limit < 25% of
+          Building Limit
+        category: Coverages & Deductibles
+        code: "214"
+        internalMessage: Personal property replacement cost coverage cannot be selected if the
+          personal property limit is less than 25% of the building limit.
+        agentMessage: Personal property replacement cost coverage cannot be selected if the
+          personal property limit is less than 25% of the building limit.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: true
+        active: true
+        fields:
+          - name: coverageLimits.building.amount
+            value: 1200000
+          - name: coverageLimits.personalProperty.amount
+            value: 299999
+  - description: Renewal exception triggers when Replacement Cost Coverage Selected When
+      Contents Limit < 25% of Building Limit
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          building:
+            amount: 1200000
+          personalProperty:
+            amount: 299999
+    output:
+      - action: Underwriting Review
+        displayText: Replacement Cost Coverage Selected When Contents Limit < 25% of
+          Building Limit
+        category: Coverages & Deductibles
+        code: "214"
+        internalMessage: Personal property replacement cost coverage cannot be selected if the
+          personal property limit is less than 25% of the building limit.
+        agentMessage: Personal property replacement cost coverage cannot be selected if the
+          personal property limit is less than 25% of the building limit.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: false
+        active: true
+        fields:
+          - name: coverageLimits.building.amount
+            value: 1200000
+          - name: coverageLimits.personalProperty.amount
+            value: 299999
+  - description: New Business exception does not trigger when Replacement Cost Coverage
+      Selected When Contents Limit >= 25% of Building Limit
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 1200000
+          personalProperty:
+            amount: 300001
+    output: null
+  - description: Renewal exception does not trigger when Replacement Cost Coverage Selected
+      When Contents Limit >= 25% of Building Limit
+    input:
+      document:
+        transactionType: Renewal
+        coverageLimits:
+          building:
+            amount: 1200000
+          personalProperty:
+            amount: 300001
+    output: null

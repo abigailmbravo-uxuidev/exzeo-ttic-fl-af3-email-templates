@@ -1,0 +1,108 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Building Limit Not Between building.minAmount and building.maxAmount
+type: underwriting
+category: Coverages & Deductibles
+code: "203"
+documentFields:
+  - coverageLimits.building.amount
+  - coverageLimits.building.minAmount
+  - coverageLimits.building.maxAmount
+condition: ${(it.document.coverageLimits.building.amount <
+  it.document.coverageLimits.building.minAmount) ||
+  (it.document.coverageLimits.building.amount >
+  it.document.coverageLimits.building.maxAmount)}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Building limit cannot be less than {building.minAmount} or greater than
+        {building.maxAmount} of returned Casaclue value. Please update to
+        continue the quote process or additional review is required.
+      agentMessage: Building Limit is outside the acceptable range for this
+        property.  Please submit a completed Replacement Cost Estimator for
+        review.
+      customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+        your property.
+    canOverride: true
+    active: true
+tests:
+  - description: New Business Building limit action triggers greater than building Max
+      Amount
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 555555
+            minAmount: 99000
+            maxAmount: 501000
+    output:
+      - action: Underwriting Review
+        displayText: Building Limit Not Between building.minAmount and building.maxAmount
+        category: Coverages & Deductibles
+        code: "203"
+        internalMessage: Building limit cannot be less than {building.minAmount} or greater
+          than {building.maxAmount} of returned Casaclue value. Please update to
+          continue the quote process or additional review is required.
+        agentMessage: Building Limit is outside the acceptable range for this
+          property.  Please submit a completed Replacement Cost Estimator for
+          review.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: true
+        active: true
+        fields:
+          - name: coverageLimits.building.amount
+            value: 555555
+          - name: coverageLimits.building.minAmount
+            value: 99000
+          - name: coverageLimits.building.maxAmount
+            value: 501000
+  - description: New Business Building limit action triggers when less than building Min
+      Amount
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 88888
+            minAmount: 99000
+            maxAmount: 501000
+    output:
+      - action: Underwriting Review
+        displayText: Building Limit Not Between building.minAmount and building.maxAmount
+        category: Coverages & Deductibles
+        code: "203"
+        internalMessage: Building limit cannot be less than {building.minAmount} or greater
+          than {building.maxAmount} of returned Casaclue value. Please update to
+          continue the quote process or additional review is required.
+        agentMessage: Building Limit is outside the acceptable range for this
+          property.  Please submit a completed Replacement Cost Estimator for
+          review.
+        customerMessage: We apologize, we are unable to complete an automated Flood Quote for
+          your property.
+        canOverride: true
+        active: true
+        fields:
+          - name: coverageLimits.building.amount
+            value: 88888
+          - name: coverageLimits.building.minAmount
+            value: 99000
+          - name: coverageLimits.building.maxAmount
+            value: 501000
+  - description: New Business Building limit action does not trigger when between building
+      Min Amount and building Max Amount
+    input:
+      document:
+        transactionType: New Business
+        coverageLimits:
+          building:
+            amount: 202020
+            minAmount: 101010
+            maxAmount: 203030
+    output: null
