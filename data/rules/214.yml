@@ -8,8 +8,10 @@ code: "214"
 documentFields:
   - coverageLimits.building.amount
   - coverageLimits.personalProperty.amount
+  - coverageOptions.personalPropertyReplacementCost.answer
 condition: ${it.document.coverageLimits.personalProperty.amount <
-  (it.document.coverageLimits.building.amount * .25)}
+  (it.document.coverageLimits.building.amount * .25) &&
+  it.document.coverageOptions.personalPropertyReplacementCost.answer === true}
 active: true
 lookupFields: []
 actions:
@@ -43,6 +45,9 @@ tests:
     input:
       document:
         transactionType: New Business
+        coverageOptions:
+          personalPropertyReplacementCost:
+            answer: true
         coverageLimits:
           building:
             amount: 1200000
@@ -67,11 +72,30 @@ tests:
             value: 1200000
           - name: coverageLimits.personalProperty.amount
             value: 299999
+          - name: coverageOptions.personalPropertyReplacementCost.answer
+            value: true
+  - description: New Business exception does not trigger when Replacement Cost Coverage Selected
+      When Contents Limit < 25% of Building Limit
+    input:
+      document:
+        transactionType: New Business
+        coverageOptions:
+          personalPropertyReplacementCost:
+            answer: false
+        coverageLimits:
+          building:
+            amount: 1200000
+          personalProperty:
+            amount: 299999
+    output: null
   - description: Renewal exception triggers when Replacement Cost Coverage Selected When
       Contents Limit < 25% of Building Limit
     input:
       document:
         transactionType: Renewal
+        coverageOptions:
+          personalPropertyReplacementCost:
+            answer: true
         coverageLimits:
           building:
             amount: 1200000
@@ -96,11 +120,16 @@ tests:
             value: 1200000
           - name: coverageLimits.personalProperty.amount
             value: 299999
+          - name: coverageOptions.personalPropertyReplacementCost.answer
+            value: true
   - description: New Business exception does not trigger when Replacement Cost Coverage
       Selected When Contents Limit >= 25% of Building Limit
     input:
       document:
         transactionType: New Business
+        coverageOptions:
+          personalPropertyReplacementCost:
+            answer: true
         coverageLimits:
           building:
             amount: 1200000
@@ -112,6 +141,9 @@ tests:
     input:
       document:
         transactionType: Renewal
+        coverageOptions:
+          personalPropertyReplacementCost:
+            answer: true
         coverageLimits:
           building:
             amount: 1200000
