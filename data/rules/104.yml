@@ -38,7 +38,6 @@ tests:
       document:
         companyCode: TTIC
         state: FL
-        zip: "32025"
         product: AF3
         transactionType: New Business
         property:
