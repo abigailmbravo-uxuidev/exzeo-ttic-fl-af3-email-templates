@@ -1,6 +1,7 @@
 'use strict';
 
 const taskPool = require('./lib/task-pool').create();
+taskPool.on('progress', ({ name, percentComplete }) => console.log(`${name}: ${percentComplete}`));
 
 const user = { userId: 'mpardue', userName: 'mpardue' };
 
