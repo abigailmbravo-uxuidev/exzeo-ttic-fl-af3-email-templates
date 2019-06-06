@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "exframe-configuration": "^1.1.3",
-    "exframe-db": "^1.0.1",
+    "exframe-db": "^1.1.0",
     "exframe-health": "^1.2.0",
     "exframe-logger": "^3.2.2",
     "exframe-service": "^1.1.0",
@@ -20,7 +20,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "MONGO_URL=mongodb://localhost:27017/harmony npm start"
   },
   "repository": {
     "type": "git",
