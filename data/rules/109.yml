@@ -7,9 +7,9 @@ category: Property
 code: "109"
 documentFields:
   - property.relativeElevation
-  - lookupFields.zipcodesettings.minREScore
+  - lookupFields.zipcodesettings.minRelativeElevation
 condition: ${(it.document.property.relativeElevation <
-  it.document.lookupFields.zipcodesettings.minREScore)}
+  it.document.lookupFields.zipcodesettings.minRelativeElevation)}
 active: true
 lookupFields:
   - name: zipcodesettings
@@ -96,7 +96,7 @@ tests:
         fields:
           - name: property.relativeElevation
             value: 99
-          - name: lookupFields.zipcodesettings.minREScore
+          - name: lookupFields.zipcodesettings.minRelativeElevation
             value: 100
   - description: Renewal Action triggers when Relative Elevation <
       zipcodesettings.minREScore
@@ -133,7 +133,7 @@ tests:
         fields:
           - name: property.relativeElevation
             value: 98
-          - name: lookupFields.zipcodesettings.minREScore
+          - name: lookupFields.zipcodesettings.minRelativeElevation
             value: 100
         set:
           - target: trigger.type
