@@ -5,8 +5,8 @@ const { URL } = require('url');
 
 const { config: { default: { ruleservice: { port } } } } = require('exframe-configuration');
 
-const evaluateDocument = (type, document, { accessToken }) => {
-  const url = new URL(`http://localhost:${port}/rules/${type}/evaluate`);
+const selfCheck = ({ accessToken }) => {
+  const url = new URL(`http://localhost:${port}/selfCheck`);
 
   return axios({
     method: 'post',
@@ -14,9 +14,8 @@ const evaluateDocument = (type, document, { accessToken }) => {
     headers: {
       'harmony-access-key': accessToken
     },
-    data: document,
     validateStatus: null
   });
 };
 
-module.exports = { evaluateDocument };
+module.exports = { selfCheck };
