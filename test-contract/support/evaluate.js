@@ -8,8 +8,6 @@ const { config: { default: { ruleservice: { port } } } } = require('exframe-conf
 const evaluateDocument = (type, document, { accessToken }) => {
   const url = new URL(`http://localhost:${port}/rules/${type}/evaluate`);
 
-  console.log('URL', url);
-  
   return axios({
     method: 'post',
     url: url.toString(),
