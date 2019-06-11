@@ -19,7 +19,8 @@
     "moment-timezone": "^0.5.25",
     "mongoose": "^5.5.12",
     "wtfnode": "^0.8.0",
-    "yaml": "^1.6.0"
+    "yaml": "^1.6.0",
+    "yargs": "^13.2.4"
   },
   "devDependencies": {
     "axios": "^0.18.0",
@@ -37,7 +38,7 @@
     "shortid": "^2.2.13"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node index.js update rules",
     "test": "echo \"Error: no test specified\" && exit 1",
     "contract-tests": "./node_modules/mocha/bin/_mocha --reporter $npm_package_config_reporter -- -c  ./test-contract",
     "local": "MONGO_URL=mongodb://localhost:27017/harmony npm start"
