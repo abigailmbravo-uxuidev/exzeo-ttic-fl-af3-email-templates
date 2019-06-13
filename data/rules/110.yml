@@ -17,7 +17,7 @@ lookupFields:
 actions:
   - transactionTypes:
       - New Business
-    action: Underwriting Review
+    action: Fatal Error
     actionOutput:
       internalMessage: Property location zip code is closed for this product type.
       agentMessage: Property location zip code is closed for this product type.
@@ -44,7 +44,7 @@ tests:
             builtInConfig:
               name: zipcodesettings
     output:
-      - action: Underwriting Review
+      - action: Fatal Error
         displayText: Zip Code PCount less than -99
         category: ZipCode
         code: "110"
