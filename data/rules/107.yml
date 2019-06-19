@@ -7,7 +7,7 @@ category: Coverages & Deductibles
 code: "107"
 documentFields:
   - rating.netPremium
-condition: ${it.document.rating.netPremium < 250}
+condition: ${it.document.rating.netPremium !== null && it.document.rating.netPremium < 250}
 active: true
 lookupFields: []
 actions:
@@ -54,4 +54,9 @@ tests:
         transactionType: New Business
         rating:
           netPremium: 250
+    output: null
+  - description: New Business action does not trigger when Net Premium = null
+    input:
+      document:
+        transactionType: New Business
     output: null
