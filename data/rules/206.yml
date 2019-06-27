@@ -8,8 +8,9 @@ code: "206"
 documentFields:
   - underwritingAnswers.previousFloodClaims.answer
   - lookupFields.zipcodesettings.maxClaims
-condition: ${it.document.underwritingAnswers.previousFloodClaims.answer ===
-  it.document.lookupFields.zipcodesettings.maxClaims}
+condition: ${(it.document.lookupFields.zipcodesettings.maxClaims === 0 && it.document.underwritingAnswers.previousFloodClaims.answer !== 0) ||
+             (it.document.lookupFields.zipcodesettings.maxClaims === 0 && (it.document.underwritingAnswers.previousFloodClaims.answer !== 0 || it.document.underwritingAnswers.previousFloodClaims.answer !== 1)) ||
+             (it.document.lookupFields.zipcodesettings.maxClaims !== 1 || it.document.lookupFields.zipcodesettings.maxClaims !== 0)}
 active: true
 lookupFields:
   - name: zipcodesettings
@@ -83,7 +84,8 @@ tests:
           physicalAddress:
             zip: "32168"
         underwritingAnswers:
-          previousFloodClaims: 0
+          previousFloodClaims:
+            answer: 0
         lookupFields:
           - name: zipcodesettings
             type: builtIn
