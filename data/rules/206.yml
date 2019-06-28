@@ -10,7 +10,7 @@ documentFields:
   - lookupFields.zipcodesettings.maxClaims
 condition: ${(it.document.lookupFields.zipcodesettings.maxClaims === 0 && it.document.underwritingAnswers.previousFloodClaims.answer != 0) ||
              (it.document.lookupFields.zipcodesettings.maxClaims === 1 && (it.document.underwritingAnswers.previousFloodClaims.answer != 0 || it.document.underwritingAnswers.previousFloodClaims.answer != 1)) ||
-             (it.document.lookupFields.zipcodesettings.maxClaims !== 1 || it.document.lookupFields.zipcodesettings.maxClaims !== 0)}
+             (it.document.lookupFields.zipcodesettings.maxClaims !== 1 && it.document.lookupFields.zipcodesettings.maxClaims !== 0)}
 active: true
 lookupFields:
   - name: zipcodesettings
