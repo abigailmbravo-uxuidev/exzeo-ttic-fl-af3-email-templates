@@ -6,8 +6,8 @@ type: underwriting
 category: Property
 code: "401"
 documentFields:
-  - coverageLimits.building.amount
-condition: ${it.document.coverageLimits.building.amount > 500000}
+  - coverageLimits.dwelling.amount
+condition: ${it.document.coverageLimits.dwelling.amount > 500000}
 active: true
 lookupFields: []
 actions:
@@ -33,7 +33,7 @@ tests:
       document:
         transactionType: New Business
         coverageLimits:
-          building:
+          dwelling:
             amount: 500001
     output:
       - action: Informational
@@ -52,7 +52,7 @@ tests:
         canOverride: true
         active: true
         fields:
-          - name: coverageLimits.building.amount
+          - name: coverageLimits.dwelling.amount
             value: 500001
   - description: New Business Personal property limit action does not trigger when Building
       Value from CasaClue <= $500,000
@@ -60,6 +60,6 @@ tests:
       document:
         transactionType: New Business
         coverageLimits:
-          building:
+          dwelling:
             amount: 500000
     output: null
