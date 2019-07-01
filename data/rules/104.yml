@@ -8,10 +8,10 @@ code: "104"
 documentFields:
   - underwritingAnswers.previousFloodClaims.answer
   - lookupFields.zipcodesettings.maxClaims
-condition: ${(upperCase(it.document.underwritingAnswers.previousFloodClaims.answer) !== 'UNKNOWN') && 
-  (it.document.lookupFields.zipcodesettings.maxClaims === 0 && it.document.underwritingAnswers.previousFloodClaims.answer != 0) ||
+condition: ${(!!it.document.underwritingAnswers.previousFloodClaims.answer && upperCase(it.document.underwritingAnswers.previousFloodClaims.answer) !== 'UNKNOWN') && 
+  ((it.document.lookupFields.zipcodesettings.maxClaims === 0 && it.document.underwritingAnswers.previousFloodClaims.answer != 0) ||
   (it.document.lookupFields.zipcodesettings.maxClaims === 1 && (it.document.underwritingAnswers.previousFloodClaims.answer != 0 && it.document.underwritingAnswers.previousFloodClaims.answer != 1)) ||
-  (it.document.lookupFields.zipcodesettings.maxClaims !== 1 && it.document.lookupFields.zipcodesettings.maxClaims !== 0)}
+  (it.document.lookupFields.zipcodesettings.maxClaims !== 1 && it.document.lookupFields.zipcodesettings.maxClaims !== 0))}
 active: true
 lookupFields:
   - name: zipcodesettings
@@ -194,6 +194,26 @@ tests:
         underwritingAnswers:
           previousFloodClaims:
             answer: UNKNOWN
+        lookupFields:
+          - name: zipcodesettings
+            type: builtIn
+            builtInConfig:
+              name: zipcodesettings
+    output: null
+  - description: New Business action does not trigger when number of claims = undefined
+    input:
+      document:
+        companyCode: TTIC
+        state: FL
+        zip: "32025"
+        product: AF3
+        transactionType: New Business
+        property:
+          id: ""
+          physicalAddress:
+            zip: "32025"
+        underwritingAnswers:
+          previousFloodClaims: {}
         lookupFields:
           - name: zipcodesettings
             type: builtIn
