@@ -14,6 +14,11 @@ context('Self Check', () => {
       const accessToken = await getAccessToken('TTIC_CSR_HO3');
       const response = await selfCheck({ accessToken });
 
+      if (!response.data.result || !response.data.result.failedTests) {
+        console.log(response.data);
+        return Promise.resolve();
+      }
+
       if (response.data.result.failedTests && response.data.result.failedTests.length > 0) {
         console.log(
           response.data.result.failedTests.filter(({ path }) => !!path)
