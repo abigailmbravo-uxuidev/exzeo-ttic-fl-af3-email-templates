@@ -27,6 +27,8 @@ const context = {
   taskPool
 };
 
+console.log(argv);
+
 Promise.all([
   updateRules && require('./lib/update-rules').updateRules(context),
   updateEmail && require('./lib/update-email').updateEmail(context)
