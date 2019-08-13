@@ -1,0 +1,28 @@
+companyCode: TTIC
+state: FL
+product: AF3
+type: coverageLimit
+name: building
+version: '1970-01-01T00:00:00.000Z'
+createdAt: '2019-04-05T18:09:15.720Z'
+updatedAt: '2019-04-05T18:09:15.720Z'
+createdBy: {}
+updatedBy: {}
+details:
+  name: building
+  required: true
+  amount: "${it.coverageLimits.building.value}"
+  letterDesignation: A
+  maxAmount: "${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount
+    * (it.zipCodeSettings.coverageLimits.building.maxReplacementCostRatio || 1)/1000)
+    * 1000, 100000), 500000)}"
+  minAmount: "${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount
+    * (it.zipCodeSettings.coverageLimits.building.minReplacementCostRatio || 1)/1000)
+    * 1000, 100000), 250000)}"
+  initialValue: "${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount/1000)
+    * 1000, 100000), 500000)}"
+  displayText: Building
+  root: true
+  groups:
+  - coverage
+  - initialData
