@@ -24,7 +24,7 @@ actions:
       customerMessage: Please be aware the estimated replacement cost of your home may exceed
         the maximum building policy limit of $500,000. Excess insurance may be
         required to reduce your out of pocket expenses.
-    canOverride: true
+    canOverride: false
     active: true
 tests:
   - description: New Business Personal property limit action triggers when Building Value
@@ -50,7 +50,7 @@ tests:
         customerMessage: Please be aware the estimated replacement cost of your home may exceed
           the maximum building policy limit of $500,000. Excess insurance may be
           required to reduce your out of pocket expenses.
-        canOverride: true
+        canOverride: false
         active: true
         fields:
           - name: property.coverageLimits.dwelling.amount
