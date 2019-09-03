@@ -80,7 +80,7 @@ emailConfigs:
         value: http://www.typtap.com/home
       - key: SITEURLAF3,
         value: http://www.typtap.com/flood
-    ccEmail: ${Array.of(it.lookupFields.policyDetails.agent.emailAddress, it.lookupFields.policyDetails.agency.customerServiceEmailAddress)}
+    ccEmail: ${uniq(Array.of(it.lookupFields.policyDetails.agent.emailAddress, it.lookupFields.policyDetails.agency.customerServiceEmailAddress))}
     bccEmail: ${Array.of(it.lookupFields.toEmail[0])}
     attachments: ${it.pdfs}
     publishNote:

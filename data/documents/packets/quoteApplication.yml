@@ -31,4 +31,4 @@ packetConfig:
   packetType: quoteApplication
   folderName: ${it.lookupFields.quoteDetails.quote.quoteNumber}
 documentIndex:
-  indexDocument: true
+  indexDocument: false
