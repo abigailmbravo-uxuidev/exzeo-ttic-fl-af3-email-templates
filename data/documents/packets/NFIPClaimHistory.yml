@@ -1,0 +1,35 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: NFIPClaimHistory
+inputFields:
+  policyTransactionId: ${it.input.policyTransactionId}
+lookupFields:
+  - name: policyDetails
+    type: rpc
+    rpcConfig:
+      routingKey: harmony.policy.retrievePolicyData
+      message:
+        policyTransactionId: ${it.inputFields.policyTransactionId}
+calculatedFields:
+  - name: document
+    equation: ${it.lookupFields.policyDetails.transaction}
+packetConfig:
+  packetName: NFIPClaimHistory
+  forms:
+    - name: NFIP Claim History
+  isDec: false
+  combine: true
+  data:
+    quote: ${it.lookupFields.policyDetails.transaction}
+    zipCodeSettings:
+      timezone: ${it.lookupFields.quoteDetails.quote.property.timezone}
+    transactionType: Quote-Application
+    summaryLedger: ${it.lookupFields.policyDetails.summaryLedger}
+    billPlan: ${it.lookupFields.quoteDetails.billPlan}
+    agency: ${it.lookupFields.policyDetails.agency}
+    agent: ${it.lookupFields.policyDetails.agent}
+  packetType: NFIPClaimHistory
+  folderName: ${it.lookupFields.policyDetails.transaction.policyNumber}
+documentIndex:
+  indexDocument: true

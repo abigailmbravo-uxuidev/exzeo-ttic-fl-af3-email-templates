@@ -1,0 +1,30 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: NFIPCoverLetterAdditionalInterest
+inputFields:
+  policyTransactionId: ${it.input.policyTransactionId}
+lookupFields:
+  - name: policyDetails
+    type: rpc
+    rpcConfig:
+      routingKey: harmony.policy.retrievePolicyData
+      message:
+        policyTransactionId: ${it.inputFields.policyTransactionId}
+calculatedFields:
+  - name: document
+    equation: ${it.lookupFields.policyDetails.transaction}
+packetConfig:
+  packetName: NFIPCoverLetter-AdditionalInterest
+  forms:
+    - name: NFIP Cover Letter - Additional Interest
+  isDec: false
+  combine: true
+  data:
+    transactionType: New Business NFIP AI
+    policy: ${it.lookupFields.policyDetails.transaction}
+    agent: ${it.lookupFields.policyDetails.agent}
+  packetType: NFIPCoverLetter-AdditionalInterest
+  folderName: ${it.lookupFields.policyDetails.transaction.policyNumber}
+documentIndex:
+  indexDocument: true
