@@ -3,6 +3,7 @@ state: FL
 product: AF3
 name: Building Limit Not Between building.minAmount and building.maxAmount
 type: underwriting
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: Coverages & Deductibles
 code: "203"
 documentFields:

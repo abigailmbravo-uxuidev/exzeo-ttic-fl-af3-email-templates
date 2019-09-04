@@ -3,6 +3,7 @@ state: FL
 product: AF3
 name: Home in CBRS area (property.floodZone = Z)
 type: underwriting
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: Property
 code: "402"
 documentFields:

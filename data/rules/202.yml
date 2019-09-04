@@ -3,6 +3,7 @@ state: FL
 product: AF3
 name: Zip Code Temporarily Shut Down for Pending Storm
 type: underwriting
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: ZipCode
 code: "202"
 documentFields:
