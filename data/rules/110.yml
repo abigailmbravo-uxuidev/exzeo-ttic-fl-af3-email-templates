@@ -3,6 +3,7 @@ state: FL
 product: AF3
 name: Zip Code PCount less than -99
 type: underwriting
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: ZipCode
 code: "110"
 documentFields:

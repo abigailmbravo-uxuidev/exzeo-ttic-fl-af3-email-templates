@@ -3,6 +3,7 @@ state: FL
 product: AF3
 name: Number Of Flood Claims > Max for zipcodesettings and not 'UNKNOWN'
 type: underwriting
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: Claim History
 code: "104"
 documentFields:

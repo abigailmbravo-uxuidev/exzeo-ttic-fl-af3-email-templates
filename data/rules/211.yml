@@ -3,6 +3,7 @@ state: FL
 product: AF3
 name: zipcodesettings.availableSlots between -99 and 0
 type: underwriting
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: ZipCode
 code: "211"
 documentFields:
