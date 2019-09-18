@@ -54,7 +54,7 @@ emailConfigs:
         value: ${it.lookupFields.policyDetails.transaction.effectiveDate}
       - key: AGENCY_NAME
         value: ${it.lookupFields.policyDetails.agency.displayName}
-      - key: POLICY_NUMBER
+      - key: POLICYNUMBER
         value: ${it.calculatedFields.policyNumber}
       - key: Phone Number
         value: ${it.lookupFields.policyDetails.agency.primaryPhoneNumber}
