@@ -21,8 +21,8 @@ actions:
       - New Business
     action: Underwriting Review
     actionOutput:
-      internalMessage: Building limit cannot be less than {it.document.coverageLimits.building.minAmount} or greater than
-        {it.document.coverageLimits.building.maxAmount} of returned Casaclue value. Please update to
+      internalMessage: Building limit cannot be less than ${it.document.coverageLimits.building.minAmount} or greater than
+        ${it.document.coverageLimits.building.maxAmount} of returned Casaclue value. Please update to
         continue the quote process or additional review is required.
       agentMessage: Building Limit is outside the acceptable range for this
         property.  Please submit a completed Replacement Cost Estimator for
@@ -47,8 +47,8 @@ tests:
         displayText: Building Limit Not Between building.minAmount and building.maxAmount
         category: Coverages & Deductibles
         code: "203"
-        internalMessage: Building limit cannot be less than {it.document.coverageLimits.building.minAmount} or greater
-          than {it.document.coverageLimits.building.maxAmount} of returned Casaclue value. Please update to
+        internalMessage: Building limit cannot be less than ${it.document.coverageLimits.building.minAmount} or greater
+          than ${it.document.coverageLimits.building.maxAmount} of returned Casaclue value. Please update to
           continue the quote process or additional review is required.
         agentMessage: Building Limit is outside the acceptable range for this
           property.  Please submit a completed Replacement Cost Estimator for
@@ -79,8 +79,8 @@ tests:
         displayText: Building Limit Not Between building.minAmount and building.maxAmount
         category: Coverages & Deductibles
         code: "203"
-        internalMessage: Building limit cannot be less than {it.document.coverageLimits.building.minAmount} or greater
-          than {it.document.coverageLimits.building.maxAmount} of returned Casaclue value. Please update to
+        internalMessage: Building limit cannot be less than ${it.document.coverageLimits.building.minAmount} or greater
+          than ${it.document.coverageLimits.building.maxAmount} of returned Casaclue value. Please update to
           continue the quote process or additional review is required.
         agentMessage: Building Limit is outside the acceptable range for this
           property.  Please submit a completed Replacement Cost Estimator for
