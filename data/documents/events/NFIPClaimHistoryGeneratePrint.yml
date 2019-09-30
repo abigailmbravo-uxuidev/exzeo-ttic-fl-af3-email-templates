@@ -2,10 +2,8 @@ companyCode: TTIC
 state: FL
 product: AF3
 name: NFIPClaimHistoryGeneratePrint
-active: true
-events:
-  - harmony.policy.bound
-  - harmony.policy.renewed
+active: false
+events: []
 inputFields:
   policyTransactionId: ${it.input.policyTransactionId}
 lookupFields:
