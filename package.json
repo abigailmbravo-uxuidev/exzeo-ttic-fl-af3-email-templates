@@ -39,7 +39,7 @@
     "shortid": "^2.2.13"
   },
   "scripts": {
-    "start": "node index.js update rules",
+    "start": "node index.js update --all",
     "test": "echo \"Error: no test specified\" && exit 1",
     "contract-tests": "./node_modules/mocha/bin/_mocha --reporter $npm_package_config_reporter -- -c  ./test-contract",
     "local": "MONGO_URL=mongodb://localhost:27017/harmony npm start"
