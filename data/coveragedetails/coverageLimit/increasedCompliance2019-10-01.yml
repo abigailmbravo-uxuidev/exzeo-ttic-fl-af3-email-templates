@@ -12,9 +12,7 @@
   details: 
     name: "increasedCompliance"
     readonly: true
-    amount: |
-      ${it.property.territory === '45000' ? 0 :
-      it.coverageLimits.increasedCompliance.value}
+    amount: "${it.property.territory === '45000' ? 0 : it.coverageLimits.increasedCompliance.value}"
     displayText: "Increased Cost of Compliance"
     initialValue: "${it.property.territory === '45000' ? 0 : 30000}"
     groups: 

@@ -12,9 +12,7 @@
   details: 
     name: "increasedCompliance"
     readonly: true
-    amount: |
-      ${it.property.floodZone === 'Z' ? 0 :
-      it.coverageLimits.increasedCompliance.value}
+    amount: "${it.property.floodZone === 'Z' ? 0 : it.coverageLimits.increasedCompliance.value}"
     displayText: "Increased Cost of Compliance"
     initialValue: "${it.property.floodZone === 'Z' ? 0 : 30000}"
     groups: 
