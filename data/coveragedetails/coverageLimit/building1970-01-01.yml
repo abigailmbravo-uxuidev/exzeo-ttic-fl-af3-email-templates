@@ -14,22 +14,9 @@
     required: true
     amount: "${it.coverageLimits.building.value}"
     letterDesignation: "A"
-    maxAmount: |
-      
-      ${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount
-      *
-      (it.zipCodeSettings.coverageLimits.building.maxReplacementCostRatio
-      || 1)/1000) * 1000, 100000), 500000)}
-    minAmount: |
-      
-      ${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount
-      *
-      (it.zipCodeSettings.coverageLimits.building.minReplacementCostRatio
-      || 1)/1000) * 1000, 100000), 250000)}
-    initialValue: |
-      
-      ${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount/1000)
-      * 1000, 100000), 500000)}
+    maxAmount: "${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount * (it.zipCodeSettings.coverageLimits.building.maxReplacementCostRatio || 1)/1000) * 1000, 100000), 500000)}"
+    minAmount: "${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount * (it.zipCodeSettings.coverageLimits.building.minReplacementCostRatio || 1)/1000) * 1000, 100000), 250000)}"
+    initialValue: "${Math.min(Math.max(Math.round(it.property.coverageLimits.dwelling.amount/1000) * 1000, 100000), 500000)}"
     displayText: "Building"
     root: true
     groups: 

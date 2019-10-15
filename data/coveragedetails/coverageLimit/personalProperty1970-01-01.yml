@@ -14,9 +14,7 @@
     required: true
     amount: "${it.coverageLimits.personalProperty.value}"
     letterDesignation: "B"
-    maxAmount: |
-      ${Math.min(Math.round(it.coverageLimits.building.value /
-      1000 * 0.50) * 1000, 250000)}
+    maxAmount: "${Math.min(Math.round(it.coverageLimits.building.value / 1000 * 0.50) * 1000, 250000)}"
     initialValue: 0
     displayText: "Personal Property"
     minAmount: 0
