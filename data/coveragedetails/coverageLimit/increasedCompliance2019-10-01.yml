@@ -4,7 +4,7 @@
   product: "AF3"
   type: "coverageLimit"
   name: "increasedCompliance"
-  version: 1970-01-01T00:00:00.000Z
+  version: 2019-10-01T00:00:00.000Z
   createdAt: 2019-04-05T18:09:15.720Z
   updatedAt: 2019-04-05T18:09:15.720Z
   createdBy: {}
@@ -13,10 +13,10 @@
     name: "increasedCompliance"
     readonly: true
     amount: |
-      ${it.property.floodZone === 'Z' ? 0 :
+      ${it.property.territory === '45000' ? 0 :
       it.coverageLimits.increasedCompliance.value}
     displayText: "Increased Cost of Compliance"
-    initialValue: "${it.property.floodZone === 'Z' ? 0 : 30000}"
+    initialValue: "${it.property.territory === '45000' ? 0 : 30000}"
     groups: 
       - "coverage"
       - "initialData"
