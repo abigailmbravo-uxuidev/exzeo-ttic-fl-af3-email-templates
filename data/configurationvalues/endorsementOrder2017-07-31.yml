@@ -1,0 +1,160 @@
+
+  companyCode: "TTIC"
+  state: "FL"
+  product: "AF3"
+  version: 2017-07-31T04:00:00.000Z
+  key: "endorsementOrder"
+  value: 
+    endorsementOrder: 
+      - 
+        path: "coverageLimits.building.amount"
+        label: "Building Limit"
+        order: 1
+      - 
+        path: "coverageLimits.personalProperty.amount"
+        label: "Personal Property Limit"
+        order: 2
+      - 
+        path: "coverageLimits.lossOfUse.amount"
+        label: "Loss of Use Amount"
+        order: 5
+      - 
+        path: "coverageLimits.increasedCompliance.amount"
+        label: "Increased Compliance Amount"
+        order: 4
+      - 
+        path: "deductibles.buildingDeductible.amount"
+        label: "Building Deductible"
+        order: 6
+      - 
+        path: "deductibles.personalPropertyDeductible.amount"
+        label: "Personal Property Deductible"
+        order: 7
+      - 
+        path: "coverageOptions.personalPropertyReplacementCost.answer"
+        label: "Personal Property Repl Cost"
+        order: 3
+      - 
+        path: "property.yearBuilt"
+        label: "Year Home Built"
+        order: 8
+      - 
+        path: "property.constructionType"
+        label: "Construction"
+        order: 9
+      - 
+        path: "property.floodZone"
+        label: "Flood Zone"
+        order: 12
+      - 
+        path: "property.townhouseRowhouse"
+        label: "Townhouse / Rowhouse"
+        order: 18
+      - 
+        path: "property.territory"
+        label: "Territory"
+        order: 13
+      - 
+        path: "property.baseFloodElevation"
+        label: "Base Flood Elevation"
+        order: 14
+      - 
+        path: "property.residenceType"
+        label: "Residence Type"
+        order: 10
+      - 
+        path: "property.squareFeet"
+        label: "Sq. Ft. of Home"
+        order: 11
+      - 
+        path: "policyHolders.0.firstName"
+        label: "First Name"
+        order: 15
+      - 
+        path: "policyHolders.0.lastName"
+        label: "Last Name"
+        order: 16
+      - 
+        path: "policyHolders.0.primaryPhoneNumber"
+        label: "Primary Phone"
+        order: 17
+      - 
+        path: "policyHolders.0.secondaryPhoneNumber"
+        label: "Secondary Phone"
+        order: 18
+      - 
+        path: "policyHolders.0.emailAddress"
+        label: "Email Address"
+        order: 19
+      - 
+        path: "policyHolders.0.electronicDelivery"
+        label: "PH 1 Electronic Delivery"
+        order: 20
+      - 
+        path: "policyHolders.1.firstName"
+        label: "First Name"
+        order: 21
+      - 
+        path: "policyHolders.1.lastName"
+        label: "Last Name"
+        order: 22
+      - 
+        path: "policyHolders.1.primaryPhoneNumber"
+        label: "Primary Phone"
+        order: 23
+      - 
+        path: "policyHolders.1.secondaryPhoneNumber"
+        label: "Secondary Phone"
+        order: 24
+      - 
+        path: "policyHolders.1.emailAddress"
+        label: "Email Address"
+        order: 25
+      - 
+        path: "policyHolders"
+        label: "PH 2"
+        order: 60
+      - 
+        path: "policyHolderMailingAddress.address1"
+        label: "Address 1"
+        order: 26
+      - 
+        path: "policyHolderMailingAddress.address2"
+        label: "Address 2"
+        order: 27
+      - 
+        path: "policyHolderMailingAddress.city"
+        label: "City"
+        order: 28
+      - 
+        path: "policyHolderMailingAddress.state"
+        label: "State"
+        order: 29
+      - 
+        path: "policyHolderMailingAddress.zip"
+        label: "Zip"
+        order: 30
+      - 
+        path: "property.physicalAddress.address1"
+        label: "Address 1"
+        order: 31
+      - 
+        path: "property.physicalAddress.address2"
+        label: "Address 2"
+        order: 32
+      - 
+        path: "property.physicalAddress.city"
+        label: "City"
+        order: 33
+      - 
+        path: "property.physicalAddress.state"
+        label: "State"
+        order: 34
+      - 
+        path: "property.physicalAddress.zip"
+        label: "Zip"
+        order: 35
+      - 
+        path: "property.FEMAfloodZone"
+        label: "FEMA Flood Zone"
+        order: 36
