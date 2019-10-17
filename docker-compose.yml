@@ -1,7 +1,7 @@
 version: "2"
 
 services:
-  ttic-fl-ho3:
+  ttic-fl-af3:
     build: .
     command: npm start
     container_name: ttic-fl-af3
