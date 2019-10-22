@@ -45,7 +45,7 @@ Promise.all([
   updateConfigValues && require('./lib/update-config-values').updateConfigValues(context),
   updateCoverageDetails && require('./lib/update-coverage-details').updateCoverageDetails(context),
   updateFormFields && require('./lib/update-form-fields').updateFormFields(context),
-  updateDocumentEvents && require('./lib/update-documentEvents').updateEvents(context),
+  updateDocumentEvents && require('./lib/update-documentevents').updateEvents(context),
   updateDocumentPackets && require('./lib/update-documentpackets').updatePackets(context)
 ])
   .then(() => service.gracefulShutdown());
