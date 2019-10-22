@@ -13,7 +13,7 @@ lookupFields:
   - name: quoteDetails
     type: rpc
     rpcConfig:
-      routingKey: harmony.quote.retrieveQuote
+      routingKey: harmony.quote.getQuoteDetails
       message:
         quoteNumber: ${it.inputFields.quoteNumber}
 calculatedFields:
@@ -48,8 +48,6 @@ emailConfigs:
     variables: 
       - key: QUOTE_NUMBER
         value: ${it.calculatedFields.quoteNumber}
-      - key: POLICYHOLDER1_FIRSTNAME
-        value: ${it.calculatedFields.firstName}
       - key: POLICYHOLDER1_LASTNAME
         value: ${it.calculatedFields.lastName}
       - key: AGENT_FIRST_NAME

@@ -4,6 +4,7 @@ product: AF3
 name: invoice
 inputFields:
   policyTransactionId: ${it.input.policyTransactionId}
+  transactionType: ${it.input.transactionType}
 lookupFields:
   - name: policyDetails
     type: rpc
@@ -21,11 +22,11 @@ packetConfig:
   forms:
     - name: Invoice
       addEvenPage: true
-      printOrder: 32.0
+      printOrder: 32
   isDec: false
   data:
     policy: ${it.lookupFields.policyDetails.transaction}
-    transactionType: ${it.calculatedFields.transactionType}
+    transactionType: ${it.inputFields.transactionType || it.calculatedFields.transactionType}
     summaryLedger: ${it.lookupFields.policyDetails.summaryLedger}
     agency: ${it.lookupFields.policyDetails.agency}
     agent: ${it.lookupFields.policyDetails.agent}

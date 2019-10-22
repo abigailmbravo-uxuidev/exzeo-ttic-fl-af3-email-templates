@@ -54,7 +54,7 @@ emailConfigs:
         value: ${it.lookupFields.policyDetails.transaction.effectiveDate}
       - key: AGENCY_NAME
         value: ${it.lookupFields.policyDetails.agency.displayName}
-      - key: POLICYNUMBER
+      - key: POLICY_NUMBER
         value: ${it.calculatedFields.policyNumber}
       - key: Phone Number
         value: ${it.lookupFields.policyDetails.agency.primaryPhoneNumber}
@@ -104,3 +104,11 @@ emailConfigs:
       - key: POLICYHOLDER1_LASTNAME
         value: ${it.calculatedFields.lastName}
     attachments: ${filter(it.pdfs, ['packetName', 'NFIPCoverLetter-Policyholder'])}
+printConfigs: 
+  - printType: generic
+    metadata:
+      packetName: fullPolicyPacket
+    referenceResource:
+      resourceId: "${it.calculatedFields.policyNumber}"
+      resourceType: policyNumber
+    files: "${it.pdfs.map(x => ({ ...x, fileType: 'Policy Packet' }))}"

@@ -13,7 +13,7 @@ lookupFields:
   - name: quoteDetails
     type: rpc
     rpcConfig:
-      routingKey: harmony.quote.retrieveQuote
+      routingKey: harmony.quote.getQuoteDetails
       message:
         quoteNumber: ${it.inputFields.quoteNumber}
 calculatedFields:

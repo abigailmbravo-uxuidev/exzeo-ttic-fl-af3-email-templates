@@ -21,10 +21,10 @@ packetConfig:
   forms:
     - name: Invoice
       addEvenPage: true
-      printOrder: 1.0
+      printOrder: 1
     - name: Dec Page
       addEvenPage: true
-      printOrder: 2.0
+      printOrder: 2
   isDec: true
   combine: true
   data:
