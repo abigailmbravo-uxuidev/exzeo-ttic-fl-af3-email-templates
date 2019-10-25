@@ -3,7 +3,7 @@
   state: "FL"
   product: "AF3"
   version: 1970-01-01T00:00:00.000Z
-  key: "glCode-endorsement-empTrustfee"
+  key: "glCode-endorsement-empTrustFee"
   value: null
   updatedAt: 2019-06-14T14:36:40.684Z
   createdAt: 2019-06-14T14:36:40.684Z
