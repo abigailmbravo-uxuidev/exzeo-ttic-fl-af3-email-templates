@@ -55,9 +55,13 @@
         label: "Territory"
         order: 13
       - 
+        path: "property.floodterritory"
+        label: "Flood Territory"
+        order: 14
+      - 
         path: "property.baseFloodElevation"
         label: "Base Flood Elevation"
-        order: 14
+        order: 15
       - 
         path: "property.residenceType"
         label: "Residence Type"
@@ -69,47 +73,47 @@
       - 
         path: "policyHolders.0.firstName"
         label: "First Name"
-        order: 15
+        order: 16
       - 
         path: "policyHolders.0.lastName"
         label: "Last Name"
-        order: 16
+        order: 17
       - 
         path: "policyHolders.0.primaryPhoneNumber"
         label: "Primary Phone"
-        order: 17
+        order: 18
       - 
         path: "policyHolders.0.secondaryPhoneNumber"
         label: "Secondary Phone"
-        order: 18
+        order: 19
       - 
         path: "policyHolders.0.emailAddress"
         label: "Email Address"
-        order: 19
+        order: 20
       - 
         path: "policyHolders.0.electronicDelivery"
         label: "PH 1 Electronic Delivery"
-        order: 20
+        order: 21
       - 
         path: "policyHolders.1.firstName"
         label: "First Name"
-        order: 21
+        order: 22
       - 
         path: "policyHolders.1.lastName"
         label: "Last Name"
-        order: 22
+        order: 23
       - 
         path: "policyHolders.1.primaryPhoneNumber"
         label: "Primary Phone"
-        order: 23
+        order: 24
       - 
         path: "policyHolders.1.secondaryPhoneNumber"
         label: "Secondary Phone"
-        order: 24
+        order: 25
       - 
         path: "policyHolders.1.emailAddress"
         label: "Email Address"
-        order: 25
+        order: 26
       - 
         path: "policyHolders"
         label: "PH 2"
@@ -117,44 +121,44 @@
       - 
         path: "policyHolderMailingAddress.address1"
         label: "Address 1"
-        order: 26
+        order: 27
       - 
         path: "policyHolderMailingAddress.address2"
         label: "Address 2"
-        order: 27
+        order: 28
       - 
         path: "policyHolderMailingAddress.city"
         label: "City"
-        order: 28
+        order: 29
       - 
         path: "policyHolderMailingAddress.state"
         label: "State"
-        order: 29
+        order: 30
       - 
         path: "policyHolderMailingAddress.zip"
         label: "Zip"
-        order: 30
+        order: 31
       - 
         path: "property.physicalAddress.address1"
         label: "Address 1"
-        order: 31
+        order: 32
       - 
         path: "property.physicalAddress.address2"
         label: "Address 2"
-        order: 32
+        order: 33
       - 
         path: "property.physicalAddress.city"
         label: "City"
-        order: 33
+        order: 34
       - 
         path: "property.physicalAddress.state"
         label: "State"
-        order: 34
+        order: 35
       - 
         path: "property.physicalAddress.zip"
         label: "Zip"
-        order: 35
+        order: 36
       - 
         path: "property.FEMAfloodZone"
         label: "FEMA Flood Zone"
-        order: 36
+        order: 37
