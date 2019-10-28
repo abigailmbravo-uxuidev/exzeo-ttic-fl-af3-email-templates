@@ -5,7 +5,7 @@ name: decPageGeneratePrint
 active: true
 events: []
 inputFields:
-  policyTransactionId:"${it.input.policyTransactionId}
+  policyTransactionId: ${it.input.policyTransactionId}
 lookupFields:
   - name: policyDetails
     type: rpc
