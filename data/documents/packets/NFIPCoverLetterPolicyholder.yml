@@ -1,0 +1,30 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: NFIPCoverLetterPolicyholder
+inputFields:
+  policyTransactionId: ${it.input.policyTransactionId}
+lookupFields:
+  - name: policyDetails
+    type: rpc
+    rpcConfig:
+      routingKey: harmony.policy.retrievePolicyData
+      message:
+        policyTransactionId: ${it.inputFields.policyTransactionId}
+calculatedFields:
+  - name: document
+    equation: ${it.lookupFields.policyDetails.transaction}
+packetConfig:
+  packetName: NFIPCoverLetter-Policyholder
+  forms:
+    - name: NFIP Cover Letter - Policyholder
+  isDec: false
+  combine: true
+  data:
+    policy: ${it.lookupFields.policyDetails.transaction}
+    transactionType: New Business NFIP Policyholder
+    agent: ${it.lookupFields.policyDetails.agent}
+  packetType: NFIPCoverLetter-Policyholder
+  folderName: ${it.lookupFields.policyDetails.transaction.policyNumber}
+documentIndex:
+  indexDocument: true

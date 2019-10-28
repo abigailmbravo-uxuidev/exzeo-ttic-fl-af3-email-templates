@@ -1,0 +1,17 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: decPageGenerate
+active: true
+events:
+  - harmony.policy.aorEndorsed
+  - harmony.policy.bound
+  - harmony.policy.renewed
+inputFields:
+  policyTransactionId: ${it.input.policyTransactionId}
+lookupFields: []
+calculatedFields: []
+packetConfigs:
+  - packetName: decPage
+    args:
+      policyTransactionId: ${it.inputFields.policyTransactionId}
