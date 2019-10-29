@@ -1,0 +1,115 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: fullPolicyPacketRenewal
+active: true
+events:
+  - harmony.policy.renewed
+inputFields:
+  policyTransactionId: ${it.input.policyTransactionId}
+lookupFields:
+  - name: policyDetails
+    type: rpc
+    rpcConfig:
+      routingKey: harmony.policy.retrievePolicyData
+      message:
+        policyTransactionId: ${it.inputFields.policyTransactionId}
+  - name: toEmail
+    type: rest
+    restConfig:
+      method: get
+      endpoint: http://policy-data
+      path: /policies/${it.lookupFields.policyDetails.transaction.policyNumber}/emailAddresses
+calculatedFields:
+  - name: policyNumber
+    equation: ${it.lookupFields.policyDetails.transaction.policyNumber}
+  - name: policyHolders
+    equation: ${it.lookupFields.policyDetails.transaction.policyHolders}
+  - name: firstName
+    equation: ${it.calculatedFields.policyHolders[0].firstName}
+  - name: emailAddress
+    equation: ${it.calculatedFields.policyHolders[0].emailAddress}
+  - name: lastName
+    equation: ${it.calculatedFields.policyHolders[0].lastName}
+packetConfigs:
+  - packetName: fullPolicyPacket
+    args:
+      policyTransactionId: ${it.inputFields.policyTransactionId}
+  - packetName: NFIPCoverLetterPolicyholder
+    args:
+      policyTransactionId: ${it.inputFields.policyTransactionId}
+emailConfigs:
+  - templateName: renewalEmail.html
+    fromName: TypTap
+    fromEmail: contact@typtap.com
+    subject: "TypTap Flood Policy # ${it.calculatedFields.policyNumber} ${it.calculatedFields.lastName}"
+    body: ""
+    toEmail: ${Array.of(it.calculatedFields.emailAddress)}
+    toName: ${it.calculatedFields.firstName}
+    variables:
+      - key: TITLE
+        value: Hello ${it.calculatedValues.firstName}
+      - key: Effective Date
+        value: ${it.lookupFields.policyDetails.transaction.effectiveDate}
+      - key: AGENCY_NAME
+        value: ${it.lookupFields.policyDetails.agency.displayName}
+      - key: POLICY_NUMBER
+        value: ${it.calculatedFields.policyNumber}
+      - key: Phone Number
+        value: ${it.lookupFields.policyDetails.agency.primaryPhoneNumber}
+      - key: Email
+        value: ${it.lookupFields.policyDetails.agency.customerServiceEmailAddress}
+      - key: AF3CUSTOMERSERVICEPHONE,
+        value: 844-289-7968
+      - key: AF3STANDARDMAILCUSTOMERSERVICESTREETADDRESS,
+        value: P.O. Box 1120
+      - key: AF3STANDARDMAILCUSTOMERSERVICECITYSTATEZIP,
+        value: Ocala, FL 34478
+      - key: AF3OVERNIGHTCUSTOMERSERVICESTREETADDRESS,
+        value: 3001 SE Maricamp Road
+      - key: AF3OVERNIGHTCUSTOMERSERVICECITYSTATEZIP,
+        value: Ocala, FL 34471
+      - key: AF3CUSTOMERSERVICEEMAIL,
+        value: customerservice@typtap.com
+      - key: AF3CUSTOMERSERVICEFAX,
+        value: 352-533-4073
+      - key: AF3CUSTOMERSERVICEMAILINGADDRESS,
+        value: P.O. Box 1120, Ocala, FL 34478
+      - key: SITEURL,
+        value: http://www.typtap.com
+      - key: SITEURLH03,
+        value: http://www.typtap.com/home
+      - key: SITEURLAF3,
+        value: http://www.typtap.com/flood
+    ccEmail: ${uniq(Array.of(it.lookupFields.policyDetails.agent.emailAddress, it.lookupFields.policyDetails.agency.customerServiceEmailAddress))}
+    bccEmail: ${Array.of(it.lookupFields.toEmail[0])}
+    attachments: ${it.pdfs}
+    publishNote:
+      documentReference:
+        number: ${it.calculatedFields.policyNumber}
+        numberType: policyNumber
+      content: "Bind Email sent to ${Array.of(it.calculatedFields.emailAddress)}"
+      attachments: "${it.pdfs.map(x => ({ ...x, fileType: 'Policy Packet' }))}"
+  - templateName: policy.html
+    fromName: TypTap
+    fromEmail: contact@typtap.com
+    subject: "NFIP Cover Letter - Policyholder: ${it.calculatedFields.policyNumber} ${it.calculatedFields.firstName} ${it.calculatedFields.lastName}"
+    body: ""
+    toEmail: ${it.lookupFields.toEmail}
+    toName: Print Shop
+    variables:
+      - key: POLICY_NUMBER
+        value: ${it.calculatedFields.policyNumber}
+      - key: POLICYHOLDER1_FIRSTNAME
+        value: ${it.calculatedFields.firstName}
+      - key: POLICYHOLDER1_LASTNAME
+        value: ${it.calculatedFields.lastName}
+    attachments: ${filter(it.pdfs, ['packetName', 'NFIPCoverLetter-Policyholder'])}
+printConfigs: 
+  - printType: generic
+    metadata:
+      packetName: fullPolicyPacket
+    referenceResource:
+      resourceId: "${it.calculatedFields.policyNumber}"
+      resourceType: policyNumber
+    files: "${it.pdfs.map(x => ({ ...x, fileType: 'Policy Packet' }))}"
