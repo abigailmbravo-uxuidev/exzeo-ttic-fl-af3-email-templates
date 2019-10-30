@@ -5,6 +5,7 @@ name: decPageGenerate
 active: true
 events:
   - harmony.policy.aorEndorsed
+  - harmony.policy.endorsed
   - harmony.policy.bound
   - harmony.policy.renewed
 inputFields:
