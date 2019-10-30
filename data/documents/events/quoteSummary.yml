@@ -63,11 +63,11 @@ emailConfigs:
         value: ${it.calculatedFields.agentEmail}
       - key: SITEURL
         value: http://www.typtap.com
-      - key: SITEURLH03,
+      - key: SITEURLH03
         value: http://www.typtap.com/home
-      - key: SITEURLAF3,
+      - key: SITEURLAF3
         value: http://www.typtap.com/flood
-      - key: AF3CUSTOMERSERVICEEMAIL,
+      - key: AF3CUSTOMERSERVICEEMAIL
         value: customerservice@typtap.com
       - key: QUOTELINK
         value: http://www.typtap.com/flood
