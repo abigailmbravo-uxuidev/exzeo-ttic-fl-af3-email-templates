@@ -22,7 +22,7 @@ lookupFields:
       endpoint: http://policy-data
       path: /policies/${it.lookupFields.policyDetails.transaction.policyNumber}/emailAddresses
 calculatedFields:
-  - name" : policyNumber
+  - name : policyNumber
     equation: ${it.lookupFields.policyDetails.transaction.policyNumber}
   - name: policyHolders
     equation: ${it.lookupFields.policyDetails.transaction.policyHolders}
