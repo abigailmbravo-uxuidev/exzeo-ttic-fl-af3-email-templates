@@ -1,0 +1,93 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: floodterritory Not in {15000, 25000, 35000, 45000}
+type: underwriting
+effectiveDate: 2019-10-01T04:00:00.000Z
+category: Property
+code: "105"
+documentFields:
+  - property.floodterritory
+condition: ${!includes(['15000', '25000', '35000', '45000'], it.document.property.floodterritory)}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Fatal Error
+    actionOutput:
+      internalMessage: Flood quoting is only available for flood territories 15000, 25000, 35000, 45000.
+      agentMessage: The Territory for this property is not valid for product type.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: Flood quoting is only available for flood territories 15000, 25000, 35000, 45000.
+      agentMessage: The Territory for this property is not valid for product type.
+      customerMessage: We apologize, we are unable to provide an automated Flood quote for your
+        property at this time.  Please contact one of our representatives so
+        they may further assist you in obtaining a quote.
+    canOverride: false
+    active: true
+tests:
+  - description: New Business action triggers when floodterritory not in {15000, 25000, 35000, 45000}
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodterritory: "7000"
+    output:
+      - action: Fatal Error
+        displayText: floodterritory Not in {15000, 25000, 35000, 45000}
+        category: Property
+        code: "105"
+        internalMessage: Flood quoting is only available for flood territories 15000, 25000, 35000, 45000.
+        agentMessage: The Territory for this property is not valid for product type.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodterritory
+            value: "7000"
+  - description: Renewal action triggers when floodterritory not in {15000, 25000, 35000, 45000}
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodterritory: "8000"
+    output:
+      - action: Underwriting Review
+        displayText: floodterritory Not in {15000, 25000, 35000, 45000}
+        category: Property
+        code: "105"
+        internalMessage: Flood quoting is only available for flood territories 15000, 25000, 35000, 45000.
+        agentMessage: The Territory for this property is not valid for product type.
+        customerMessage: We apologize, we are unable to provide an automated Flood quote for
+          your property at this time.  Please contact one of our representatives
+          so they may further assist you in obtaining a quote.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodterritory
+            value: "8000"
+  - description: New Business action does not trigger when floodterritory in {15000, 25000, 35000, 45000}
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodterritory: "15000"
+    output: null
+  - description: Renewal action does not trigger when floodterritory in {15000, 25000, 35000, 45000}
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodterritory: "15000"
+    output: null

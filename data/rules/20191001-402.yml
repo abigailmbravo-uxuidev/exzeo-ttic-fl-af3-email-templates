@@ -1,0 +1,109 @@
+companyCode: TTIC
+state: FL
+product: AF3
+name: Home in CBRS area (floodterritory = 45000)
+type: underwriting
+effectiveDate: 2019-10-01T04:00:00.000Z
+category: Property
+code: "402"
+documentFields:
+  - property.floodterritory
+condition: ${it.document.property.floodterritory === '45000'}
+active: true
+lookupFields: []
+actions:
+  - transactionTypes:
+      - New Business
+    action: Informational
+    actionOutput:
+      internalMessage: This property is located in the Coastal Barrier Resource System and is
+        not eligible for Increased Cost of Compliance coverage.
+      agentMessage: Please be aware that this property is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+      customerMessage: Please be aware that your home is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+    canOverride: false
+    active: true
+  - transactionTypes:
+      - Renewal
+    action: Underwriting Review
+    actionOutput:
+      internalMessage: This property is located in the Coastal Barrier Resource System and is
+        not eligible for Increased Cost of Compliance coverage.
+      agentMessage: Please be aware that this property is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+      customerMessage: Please be aware that your home is located in the Coastal Barrier
+        Resource System and is not eligible for Increased Cost of Compliance
+        coverage.
+    canOverride: false
+    active: true
+tests:
+  - description: New Business Personal property limit action triggers when Home in CBRS
+      area (property.floodterritory = 45000)
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodterritory: "45000"
+    output:
+      - action: Informational
+        displayText: Home in CBRS area (floodterritory = 45000)
+        category: Property
+        code: "402"
+        internalMessage: This property is located in the Coastal Barrier Resource System and is
+          not eligible for Increased Cost of Compliance coverage.
+        agentMessage: Please be aware that this property is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        customerMessage: Please be aware that your home is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodterritory
+            value: "45000"
+  - description: Renewal Personal property limit action triggers when Home in CBRS area
+      (property.floodterritory = 45000)
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodterritory: "45000"
+    output:
+      - action: Underwriting Review
+        displayText: Home in CBRS area (floodterritory = 45000)
+        category: Property
+        code: "402"
+        internalMessage: This property is located in the Coastal Barrier Resource System and is
+          not eligible for Increased Cost of Compliance coverage.
+        agentMessage: Please be aware that this property is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        customerMessage: Please be aware that your home is located in the Coastal Barrier
+          Resource System and is not eligible for Increased Cost of Compliance
+          coverage.
+        canOverride: false
+        active: true
+        fields:
+          - name: property.floodterritory
+            value: "45000"
+  - description: New Business Personal property limit action does not trigger when Home is
+      not in CBRS area (property.floodterritory is not 45000)
+    input:
+      document:
+        transactionType: New Business
+        property:
+          floodterritory: "15000"
+    output: null
+  - description: Renewal Personal property limit action does not trigger when Home is not
+      in CBRS area (property.floodterritory is not 45000)
+    input:
+      document:
+        transactionType: Renewal
+        property:
+          floodterritory: "15000"
+    output: null
