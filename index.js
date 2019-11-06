@@ -1,18 +1,23 @@
+/* eslint-disable no-console */
+
 'use strict';
 
-const argv = require('yargs')
+const service = require('exframe-service');
+const taskPool = require('exframe-task-pool').create();
+
+const { argv } = require('yargs')
   .usage('Usage: $0 <command> [options]')
   .example('$0 update rules', '(updates rules)')
   .example('$0 update email', '(updates email templates)')
   .example('$0 update config', '(updates configuration values templates)')
   .example('$0 update coverage', '(updates coverage details templates)')
   .example('$0 update form', '(updates form fields templates)')
+  .example('$0 update noteTypes', '(updates note types)')
   .example('$0 update documentevents', '(updates document event configurations)')
   .example('$0 update documentpackets', '(updates document packet configurations)')
-  .example('$0 update --all', '(updates all templates: email, rules, config, coverage, document events, document packets, and form fields)')
+  .example('$0 update --all', '(updates all templates: email, rules, config, coverage, document events, document packets, form fields, and note types)')
   .help('h')
-  .alias('h', 'help')
-  .argv;
+  .alias('h', 'help');
 
 const updateCommand = argv._.includes('update');
 const updateAll = updateCommand ? (argv.all || false) : false;
@@ -23,11 +28,9 @@ const updateCoverageDetails = (updateAll) || (updateCommand && argv._.includes('
 const updateFormFields = (updateAll) || (updateCommand && argv._.includes('form'));
 const updateDocumentEvents = (updateAll) || (updateCommand && argv._.includes('documentevents'));
 const updateDocumentPackets = (updateAll) || (updateCommand && argv._.includes('documentpackets'));
+const updateNoteTypes = (updateAll) || (updateCommand && argv._.includes('noteTypes'));
 
-const service = require('exframe-service');
 service.init({ logger: require('./lib/logger'), timeout: 0 });
-
-const taskPool = require('exframe-task-pool').create();
 taskPool.on('progress', ({ name, percentComplete }) => console.log(`${name}: ${percentComplete}`));
 
 const user = { userId: 'mpardue', userName: 'mpardue' };
@@ -46,6 +49,7 @@ Promise.all([
   updateCoverageDetails && require('./lib/update-coverage-details').updateCoverageDetails(context),
   updateFormFields && require('./lib/update-form-fields').updateFormFields(context),
   updateDocumentEvents && require('./lib/update-documentevents').updateEvents(context),
-  updateDocumentPackets && require('./lib/update-documentpackets').updatePackets(context)
+  updateDocumentPackets && require('./lib/update-documentpackets').updatePackets(context),
+  updateNoteTypes && require('./lib/update-noteTypes').updateNoteTypes(context)
 ])
   .then(() => service.gracefulShutdown());
