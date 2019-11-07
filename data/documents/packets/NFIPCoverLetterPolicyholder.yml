@@ -18,6 +18,7 @@ packetConfig:
   packetName: NFIPCoverLetter-Policyholder
   forms:
     - name: NFIP Cover Letter - Policyholder
+    - name: Notification of Change in Flood Insurance Carrier
   isDec: false
   combine: true
   data:

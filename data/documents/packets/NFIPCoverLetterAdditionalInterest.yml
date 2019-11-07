@@ -14,15 +14,27 @@ lookupFields:
 calculatedFields:
   - name: document
     equation: ${it.lookupFields.policyDetails.transaction}
+  - name: transactionType
+    equation: ${it.lookupFields.policyDetails.transaction.transactionType}
 packetConfig:
   packetName: NFIPCoverLetter-AdditionalInterest
   forms:
     - name: NFIP Cover Letter - Additional Interest
+      addEvenPage: true
+    - name: Dec Page
+      addEvenPage: false
+    - name: Invoice
+      addEvenPage: true
+    - name: Flood Info
+      addEvenPage: true
   isDec: false
   combine: true
   data:
     transactionType: New Business NFIP AI
     policy: ${it.lookupFields.policyDetails.transaction}
+    transactionDetails: "${(!['new business', 'renewal'].includes(it.calculatedFields.transactionType.toLowerCase())) ? it.lookupFields.policyDetails.transactionDetails : null}"
+    summaryLedger: ${it.lookupFields.policyDetails.summaryLedger}
+    agency: ${it.lookupFields.policyDetails.agency}
     agent: ${it.lookupFields.policyDetails.agent}
   packetType: NFIPCoverLetter-AdditionalInterest
   folderName: ${it.lookupFields.policyDetails.transaction.policyNumber}
