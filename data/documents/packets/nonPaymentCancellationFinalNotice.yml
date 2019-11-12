@@ -24,7 +24,7 @@ packetConfig:
   combine: false
   data:
     policy: ${it.lookupFields.policyDetails.transaction}
-    transactionType: "Non-Payment Notice"
+    transactionType: ${it.calculatedFields.transactionType}
     agency: ${it.lookupFields.policyDetails.agency}
     agent: ${it.lookupFields.policyDetails.agent}
   packetType: nonPaymentCancellationFinalNotice
