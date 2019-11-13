@@ -42,7 +42,7 @@ emailConfigs:
   - templateName: renewalEmail.html
     fromName: TypTap
     fromEmail: contact@typtap.com
-    subject: "TypTap Flood Policy # ${it.calculatedFields.policyNumber} ${it.calculatedFields.lastName}"
+    subject: "TypTap Flood Policy # {{POLICY_NUMBER}} {{POLICYHOLDER1_LASTNAME}}"
     body: ""
     toEmail: ${Array.of(it.calculatedFields.emailAddress)}
     toName: ${it.calculatedFields.firstName}
@@ -55,6 +55,8 @@ emailConfigs:
         value: ${it.lookupFields.policyDetails.agency.displayName}
       - key: POLICY_NUMBER
         value: ${it.calculatedFields.policyNumber}
+      - key: POLICYHOLDER1_LASTNAME
+        value: ${it.calculatedFields.lastName}
       - key: Phone Number
         value: ${it.lookupFields.policyDetails.agency.primaryPhoneNumber}
       - key: Email
