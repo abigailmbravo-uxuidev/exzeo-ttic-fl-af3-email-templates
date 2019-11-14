@@ -42,7 +42,7 @@ emailConfigs:
   - templateName: renewalEmail.html
     fromName: TypTap
     fromEmail: contact@typtap.com
-    subject: "TypTap Flood Policy # {{POLICY_NUMBER}} {{POLICYHOLDER1_LASTNAME}}"
+    subject: ""
     body: ""
     toEmail: ${Array.of(it.calculatedFields.emailAddress)}
     toName: ${it.calculatedFields.firstName}
@@ -95,7 +95,7 @@ emailConfigs:
   - templateName: policy.html
     fromName: TypTap
     fromEmail: contact@typtap.com
-    subject: "NFIP Cover Letter - Policyholder: ${it.calculatedFields.policyNumber} ${it.calculatedFields.firstName} ${it.calculatedFields.lastName}"
+    subject: ""
     body: ""
     toEmail: ${it.lookupFields.toEmail}
     toName: Print Shop

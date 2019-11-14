@@ -36,7 +36,7 @@ emailConfigs:
   - templateName: policy.html
     fromName: TypTap
     fromEmail: contact@typtap.com
-    subject: "NFIP Claim History: {{POLICY_NUMBER}} {{POLICYHOLDER1_FIRSTNAME}} {{POLICYHOLDER1_LASTNAME}}"
+    subject: "NFIP Claim History: ${it.calculatedFields.policyNumber} ${it.calculatedFields.firstName} ${it.calculatedFields.lastName}"
     body: ""
     toEmail: ${it.lookupFields.toEmail}
     toName: Print Shop

@@ -38,7 +38,7 @@ emailConfigs:
   - templateName: policy.html
     fromName: TypTap
     fromEmail: contact@typtap.com
-    subject: "NFIP Cover Letter - AdditionalInterest: {{POLICY_NUMBER}} {{POLICYHOLDER1_FIRSTNAME}} {{POLICYHOLDER1_LASTNAME}}"
+    subject: "NFIP Cover Letter - AdditionalInterest: ${it.calculatedFields.policyNumber} ${it.calculatedFields.firstName} ${it.calculatedFields.lastName}"
     body: ""
     toEmail: ${it.lookupFields.toEmail}
     toName: Print Shop
