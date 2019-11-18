@@ -8,8 +8,8 @@
     - "quote"
     - "quote-initialdata"
     - "transaction"
-  createdAt: 2019-04-05T18:09:15.727Z
-  updatedAt: 2019-04-05T18:09:15.727Z
+  groups:
+    - "mailingbilling"
   endorsementType: "Non-Premium Endorsement"
   companyCode: "TTIC"
   state: "FL"
