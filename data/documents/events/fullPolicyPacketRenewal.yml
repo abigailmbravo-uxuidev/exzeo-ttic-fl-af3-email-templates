@@ -35,9 +35,6 @@ packetConfigs:
   - packetName: fullPolicyPacket
     args:
       policyTransactionId: ${it.inputFields.policyTransactionId}
-  - packetName: NFIPCoverLetterPolicyholder
-    args:
-      policyTransactionId: ${it.inputFields.policyTransactionId}
 emailConfigs:
   - templateName: renewalEmail.html
     fromName: TypTap
@@ -90,21 +87,6 @@ emailConfigs:
         numberType: policyNumber
       content: "Bind Email sent to ${Array.of(it.calculatedFields.emailAddress)}"
       attachments: "${it.pdfs.map(x => ({ ...x, fileType: 'Policy Packet' }))}"
-  - templateName: policy.html
-    fromName: TypTap
-    fromEmail: contact@typtap.com
-    subject: "NFIP Cover Letter - Policyholder: ${it.calculatedFields.policyNumber} ${it.calculatedFields.firstName} ${it.calculatedFields.lastName}"
-    body: ""
-    toEmail: ${it.lookupFields.toEmail}
-    toName: Print Shop
-    variables:
-      - key: POLICY_NUMBER
-        value: ${it.calculatedFields.policyNumber}
-      - key: POLICYHOLDER1_FIRSTNAME
-        value: ${it.calculatedFields.firstName}
-      - key: POLICYHOLDER1_LASTNAME
-        value: ${it.calculatedFields.lastName}
-    attachments: ${filter(it.pdfs, ['packetName', 'NFIPCoverLetter-Policyholder'])}
 printConfigs: 
   - printType: generic
     metadata:
