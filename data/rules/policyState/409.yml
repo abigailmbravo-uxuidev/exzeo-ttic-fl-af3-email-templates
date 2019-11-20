@@ -3,7 +3,7 @@ companyCode: TTIC
 state: FL
 name: "Renew Policy"
 type: policyState
-code: 409
+code: '409'
 category: "State Actions"
 documentFields: 
 condition: "${!it.document.renewal && (it.document.transaction.status === 'In Force' || (it.document.transaction.status === 'Pending Underwriting Cancellation' && moment.utc(it.document.transaction.cancelDate).isAfter(moment.utc(it.document.transaction.endDate))))}"
