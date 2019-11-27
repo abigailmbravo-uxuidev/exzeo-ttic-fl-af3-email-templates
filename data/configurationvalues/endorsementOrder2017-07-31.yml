@@ -120,43 +120,43 @@
         order: 60
       - 
         path: "policyHolderMailingAddress.address1"
-        label: "Address 1"
+        label: "Mailing Address 1"
         order: 27
       - 
         path: "policyHolderMailingAddress.address2"
-        label: "Address 2"
+        label: "Mailing Address 2"
         order: 28
       - 
         path: "policyHolderMailingAddress.city"
-        label: "City"
+        label: "Mailing City"
         order: 29
       - 
         path: "policyHolderMailingAddress.state"
-        label: "State"
+        label: "Mailing State"
         order: 30
       - 
         path: "policyHolderMailingAddress.zip"
-        label: "Zip"
+        label: "Mailing Zip"
         order: 31
       - 
         path: "property.physicalAddress.address1"
-        label: "Address 1"
+        label: "Property Address 1"
         order: 32
       - 
         path: "property.physicalAddress.address2"
-        label: "Address 2"
+        label: "Property Address 2"
         order: 33
       - 
         path: "property.physicalAddress.city"
-        label: "City"
+        label: "Property City"
         order: 34
       - 
         path: "property.physicalAddress.state"
-        label: "State"
+        label: "Property State"
         order: 35
       - 
         path: "property.physicalAddress.zip"
-        label: "Zip"
+        label: "Property Zip"
         order: 36
       - 
         path: "property.FEMAfloodZone"
