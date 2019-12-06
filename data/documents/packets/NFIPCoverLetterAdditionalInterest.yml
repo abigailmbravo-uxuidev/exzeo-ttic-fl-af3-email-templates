@@ -27,7 +27,7 @@ packetConfig:
       addEvenPage: true
     - name: Flood Info
       addEvenPage: true
-  isDec: false
+  isDec: true
   combine: true
   data:
     transactionType: New Business NFIP AI
