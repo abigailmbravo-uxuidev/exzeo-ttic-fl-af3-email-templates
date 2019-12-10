@@ -1,0 +1,146 @@
+companyCode: TTIC
+state: FL
+product: AF3
+rateCode: 201910
+engineCode: '10004'
+constants:
+  fees:
+    mgaPolicy:
+      type: flat
+      value: 25
+    empTrust:
+      type: flat
+      value: 0
+    fhcf:
+      type: factor
+      value: 0
+    figa:
+      type: factor
+      value: 0
+    citizens:
+      type: factor
+      value: 0
+inputFields:
+  coverageA:
+    exp: "${it.input.coverageLimits.building.amount}"
+    type: number
+  coverageB:
+    exp: "${it.input.coverageLimits.personalProperty.amount}"
+    type: number
+  elevQuestion:
+    exp: "${it.input.underwritingAnswers.elevationDifference.answer}"
+    type: string
+  replacementCost:
+    exp: "${it.input.coverageOptions.personalPropertyReplacementCost.answer}"
+    type: boolean
+  territory:
+    exp: "${it.input.property.floodterritory}"
+    type: string
+  yearBuilt:
+    exp: "${it.input.property.yearBuilt}"
+    type: number
+  buildingDeductible:
+    exp: "${it.input.deductibles.buildingDeductible.amount}"
+    type: number
+  contentsDeductible:
+    exp: "${it.input.deductibles.personalPropertyDeductible.amount}"
+    type: number
+lookupFields:
+  residentialBaseRate:
+    type: conditions
+    conditions:
+    - if: "${it.inputFields.territory === '15000'}"
+      value:
+        coverageA: 1.3
+        coverageB: 2
+    - if: "${it.inputFields.territory === '25000' && it.inputFields.elevQuestion ===
+        'Unknown' || it.inputFields.elevQuestion === '-1 or less'}"
+      value:
+        coverageA: 0.59
+        coverageB: 1
+    - if: "${it.inputFields.territory === '25000' && it.inputFields.elevQuestion ===
+        '0'}"
+      value:
+        coverageA: 0.59
+        coverageB: 0.3
+    - if: "${it.inputFields.territory === '25000' && it.inputFields.elevQuestion ===
+        '+1 or greater'}"
+      value:
+        coverageA: 0.29
+        coverageB: 0.21
+    - if: "${it.inputFields.territory === '35000'}"
+      value:
+        coverageA: 0.1
+        coverageB: 0.14
+    - if: "${it.inputFields.territory === '45000'}"
+      value:
+        coverageA: 1.5
+        coverageB: 3
+  buildingDeductibleFactor:
+    type: conditions
+    conditions:
+    - if: "${it.inputFields.buildingDeductible === 500}"
+      value: 2
+    - if: "${it.inputFields.buildingDeductible === 1000}"
+      value: 1.33
+    - if: "${it.inputFields.buildingDeductible === 2000}"
+      value: 1
+    - if: "${it.inputFields.buildingDeductible === 5000}"
+      value: 0.9
+    - if: "${it.inputFields.buildingDeductible === 10000}"
+      value: 0.75
+  contentsDeductibleFactor:
+    type: conditions
+    conditions:
+    - if: "${it.inputFields.contentsDeductible === 500}"
+      value: 2
+    - if: "${it.inputFields.contentsDeductible === 1000}"
+      value: 1.33
+    - if: "${it.inputFields.contentsDeductible === 2000}"
+      value: 1
+    - if: "${it.inputFields.contentsDeductible === 5000}"
+      value: 0.9
+    - if: "${it.inputFields.contentsDeductible === 10000}"
+      value: 0.75
+  replacementCostFactor:
+    type: conditions
+    conditions:
+    - if: "${it.inputFields.replacementCost === true}"
+      value: 0.35
+    - if: "${it.inputFields.replacementCost === false}"
+      value: 0
+  icc:
+    type: conditions
+    conditions:
+    - if: "${it.inputFields.territory === '35000' || it.inputFields.territory ===
+        '35000' || it.inputFields.territory === '35000'}"
+      value: 4
+    - if: "${(it.inputFields.territory === '25000' || it.inputFields.territory ===
+        '15000') && it.inputFields.yearBuilt < 1975}"
+      value: 55
+    - if: "${it.inputFields.territory === '25000' && it.inputFields.yearBuilt >= 1975}"
+      value: 4
+    - if: "${it.inputFields.territory === '15000' && it.inputFields.yearBuilt >= 1975}"
+      value: 13
+    - if: "${it.inputFields.territory === '45000'}"
+      value: 0
+calculatedFields:
+- path: coverageARate
+  equation: "${(it.inputFields.coverageA / 100) * it.lookupFields.residentialBaseRate.coverageA
+    * it.lookupFields.buildingDeductibleFactor}"
+- path: coverageBRate
+  equation: "${(it.inputFields.coverageB / 100) * it.lookupFields.residentialBaseRate.coverageB
+    * it.lookupFields.contentsDeductibleFactor}"
+- path: replacementCostRate
+  equation: "${it.calculatedFields.coverageBRate * it.lookupFields.replacementCostFactor}"
+- path: icc
+  equation: "${it.lookupFields.icc}"
+- path: calculatedPremium
+  equation: "${it.calculatedFields.coverageARate + it.calculatedFields.coverageBRate
+    + it.calculatedFields.replacementCostRate + it.calculatedFields.icc}"
+- path: netPremium
+  equation: "${it.calculatedFields.calculatedPremium < 250 ? 250 : it.calculatedFields.calculatedPremium}"
+- path: totalFees
+  equation: "${it.constants.fees.mgaPolicy.value}"
+- path: totalPremium
+  equation: "${it.calculatedFields.netPremium + it.calculatedFields.totalFees}"
