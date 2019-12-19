@@ -50,7 +50,7 @@ emailConfigs:
       - key: QUOTE_NUMBER
         value: ${it.calculatedFields.quoteNumber}
       - key: POLICYHOLDER1_LASTNAME
-        value: ${it.calculatedFields.lastName}
+        value: ${it.calculatedFields.lastName || ' '}
       - key: AGENT_FIRST_NAME
         value: ${it.calculatedFields.agentFirstName}
       - key: AGENT_LAST_NAME
