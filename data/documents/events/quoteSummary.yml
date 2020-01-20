@@ -70,5 +70,5 @@ emailConfigs:
       - key: AF3CUSTOMERSERVICEEMAIL
         value: customerservice@typtap.com
       - key: QUOTELINK
-        value: http://www.typtap.com/flood
+        value: "https://quote.typtap.com/${it.lookupFields.quoteDetails.quote.companyCode}/${it.lookupFields.quoteDetails.quote.state}/flood/quote/${it.calculatedFields.quoteNumber}/underwriting"
     attachments: ${it.pdfs}
