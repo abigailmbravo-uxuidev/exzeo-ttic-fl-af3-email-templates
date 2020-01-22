@@ -35,7 +35,6 @@
     - "additionalInterests"
     - "underwritingAnswers"
     - "rating"
-    - "cost"
     - "forms"
     - "transactionType"
   required: 
