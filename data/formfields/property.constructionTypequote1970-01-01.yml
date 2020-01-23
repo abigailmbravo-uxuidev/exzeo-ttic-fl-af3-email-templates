@@ -15,6 +15,7 @@
       - "MASONRY"
       - "MASONRY VENEER"
       - "SUPERIOR"
+      - "UNKNOWN"
   children: []
   required: []
   documents: 
