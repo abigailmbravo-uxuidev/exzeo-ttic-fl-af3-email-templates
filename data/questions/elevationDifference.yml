@@ -1,0 +1,20 @@
+name: "elevationDifference"
+companyCode: "TTIC"
+state: "FL"
+product: "AF3"
+model: "quote"
+step: "askUWAnswers"
+validations: 
+  - "required"
+active: true
+visible: false
+question: "What is the elevation difference for this property?"
+answers: 
+  - answer: "Unknown"
+    default: true
+  - answer: "-1 or less"
+  - answer: "0"
+  - answer: "+1 or greater"
+floodZone: 
+  - "A"
+order: 8

@@ -16,7 +16,8 @@ const { argv } = require('yargs')
   .example('$0 update documentevents', '(updates document event configurations)')
   .example('$0 update documentpackets', '(updates document packet configurations)')
   .example('$0 update engines', '(updates rating engines)')
-  .example('$0 update --all', '(updates all templates: email, rules, config, coverage, document events, document packets, form fields, rating engines, and note types)')
+  .example('$0 update questions', '(updates questions)')
+  .example('$0 update --all', '(updates all templates: email, rules, config, coverage, document events, document packets, form fields, rating engines, questions, and note types)')
   .help('h')
   .alias('h', 'help');
 
@@ -31,6 +32,7 @@ const updateDocumentEvents = (updateAll) || (updateCommand && argv._.includes('d
 const updateDocumentPackets = (updateAll) || (updateCommand && argv._.includes('documentpackets'));
 const updateNoteTypes = (updateAll) || (updateCommand && argv._.includes('noteTypes'));
 const updateRatingEngines = (updateAll) || (updateCommand && argv._.includes('engines'));
+const updateQuestions = (updateAll) || (updateCommand && argv._.includes('questions'));
 
 service.init({ logger: require('./lib/logger'), timeout: 0 });
 taskPool.on('progress', ({ name, percentComplete }) => console.log(`${name}: ${percentComplete}`));
@@ -53,6 +55,7 @@ Promise.all([
   updateDocumentEvents && require('./lib/update-documentevents').updateEvents(context),
   updateDocumentPackets && require('./lib/update-documentpackets').updatePackets(context),
   updateNoteTypes && require('./lib/update-noteTypes').updateNoteTypes(context),
-  updateRatingEngines && require('./lib/update-engines').updateRatingEngines(context)
+  updateRatingEngines && require('./lib/update-engines').updateRatingEngines(context),
+  updateQuestions && require('./lib/update-questions').updateQuestions(context)
 ])
   .then(() => service.gracefulShutdown());
