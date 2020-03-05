@@ -4,6 +4,7 @@ product: AF3
 name: 'Cancel for Non Payment'
 type: policyState
 code: '402'
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: 'State Actions'
 documentFields: []
 condition: '${parseFloat(it.document.summaryLedger.balance) > it.config.writeOffThreshold && it.document.summaryLedger.status.code === 9 && it.document.transaction.status !== ''Cancelled''}'
