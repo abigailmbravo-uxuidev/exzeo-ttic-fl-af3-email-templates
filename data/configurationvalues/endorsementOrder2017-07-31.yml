@@ -162,3 +162,56 @@
         path: "property.FEMAfloodZone"
         label: "FEMA Flood Zone"
         order: 37
+      - 
+        path: "additionalInterest.name1"
+        label: "Name 1"
+        order: 38
+      - 
+        path: "additionalInterest.name2"
+        label: "Name 2"
+        order: 39
+      - 
+        path: "additionalInterest.mailingAddress.address1"
+        label: "Address 1"
+        order: 40
+      - 
+        path: "additionalInterest.mailingAddress.address2"
+        label: "Address 2"
+        order: 41
+      - 
+        path: "additionalInterest.mailingAddress.city"
+        label: "City"
+        order: 42
+      - 
+        path: "additionalInterest.mailingAddress.state"
+        label: "State"
+        order: 43
+      - 
+        path: "additionalInterest.mailingAddress.zip"
+        label: "Zip"
+        order: 44
+      - 
+        path: "additionalInterest.mailingAddress.zipExtension"
+        label: "Zip Extension"
+        order: 45
+      - 
+        path: "additionalInterest.mailingAddress.country"
+        label: "Country"
+        order: 46
+      - 
+        path: "additionalInterest.type"
+        label: "Type"
+        order: 47
+      - 
+        path: "additionalInterest.order"
+        label: "Order"
+        order: 48
+      - 
+        path: "additionalInterest.referenceNumber"
+        label: "Reference Number"
+        order: 49
+      - 
+        path: "additionalInterest.phoneNumber"
+        label: "Phone Number"
+        order: 50
+      
