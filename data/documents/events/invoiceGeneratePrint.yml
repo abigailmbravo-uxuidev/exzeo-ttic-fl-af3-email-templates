@@ -49,4 +49,4 @@ emailConfigs:
         value: ${it.calculatedFields.firstName}
       - key: POLICYHOLDER1_LASTNAME
         value: ${it.calculatedFields.lastName}
-    attachments" : ${it.pdfs}
+    attachments: ${it.pdfs}
