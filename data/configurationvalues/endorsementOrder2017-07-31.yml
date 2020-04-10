@@ -204,7 +204,7 @@
         order: 47
       - 
         path: "additionalInterest.order"
-        label: "Order"
+        label: "Position"
         order: 48
       - 
         path: "additionalInterest.referenceNumber"
