@@ -54,27 +54,27 @@ emailConfigs:
         value: ${it.calculatedFields.policyNumber}
       - key: POLICYHOLDER1_LASTNAME
         value: ${it.calculatedFields.lastName}
-      - key: Phone Number
+      - key: AGENCY_PHONE_NUMBER
         value: ${it.lookupFields.policyDetails.agency.primaryPhoneNumber}
       - key: Email
         value: ${it.lookupFields.policyDetails.agency.customerServiceEmailAddress}
-      - key: AF3CUSTOMERSERVICEPHONE
+      - key: AF3_CUSTOMER_SERVICE_PHONE
         value: 844-289-7968
-      - key: AF3STANDARDMAILCUSTOMERSERVICESTREETADDRESS
+      - key: AF3_STANDARD_MAIL_CUSTOMER_SERVICE_STREET_ADDRESS
         value: P.O. Box 1120
-      - key: AF3STANDARDMAILCUSTOMERSERVICECITYSTATEZIP
+      - key: AF3_STANDARD_MAIL_CUSTOMER_SERVICE_CITY_STATE_ZIP
         value: Ocala, FL 34478
-      - key: AF3OVERNIGHTCUSTOMERSERVICESTREETADDRESS
+      - key: AF3_OVERNIGHT_CUSTOMER_SERVICE_STREET_ADDRESS
         value: 3001 SE Maricamp Road
-      - key: AF3OVERNIGHTCUSTOMERSERVICECITYSTATEZIP
+      - key: AF3_OVERNIGHT_CUSTOMER_SERVICE_CITY_STATE_ZIP
         value: Ocala, FL 34471
-      - key: AF3CUSTOMERSERVICEEMAIL
+      - key: AF3_CUSTOMER_SERVICE_EMAIL
         value: customerservice@typtap.com
-      - key: AF3CUSTOMERSERVICEFAX
+      - key: AF3_CUSTOMER_SERVICE_FAX
         value: (352) 533-4073
-      - key: AF3CUSTOMERSERVICEMAILINGADDRESS
+      - key: AF3_CUSTOMER_SERVICE_MAILING_ADDRESS
         value: P.O. Box 1120, Ocala, FL 34478
-      - key: SITEURL
+      - key: SITE_URL
         value: http://www.typtap.com
       - key: SITEURLH03
         value: http://www.typtap.com/home
