@@ -4,6 +4,7 @@ state: FL
 name: 'Write Off Balance'
 type: policyState
 code: '403'
+effectiveDate: 2017-08-01T04:00:00.000Z
 category: 'State Actions'
 documentFields: []
 condition: '${parseFloat(it.document.summaryLedger.balance) !== 0 && parseFloat(it.document.summaryLedger.balance) <= it.config.writeOffThreshold && parseFloat(it.document.summaryLedger.balance) >= it.config.refundThreshold}'

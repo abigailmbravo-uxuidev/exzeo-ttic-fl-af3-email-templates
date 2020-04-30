@@ -1,0 +1,17 @@
+name: "monthsOccupied"
+companyCode: "TTIC"
+state: "FL"
+product: "AF3"
+model: "quote"
+step: "askUWAnswers"
+validations:
+  - "required"
+active: true
+visible: true
+question: "How many months a year does the owner live in the home?"
+answers:
+  - answer: "0"
+  - answer: "1-5"
+  - answer: "6-9"
+  - answer: "10-12"
+order: 2
